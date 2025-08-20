@@ -12,7 +12,8 @@ class InfoModelController extends Controller
      */
     public function index()
     {
-        //
+        $infoModel=new infoModel();
+        return response()->json($infoModel);
     }
 
     /**
