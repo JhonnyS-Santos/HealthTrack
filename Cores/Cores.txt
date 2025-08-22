@@ -1,0 +1,5 @@
+--night: #131515ff;
+--jet: #2b2c28ff;
+--persian-green: #339989ff;
+--tiffany-blue: #7de2d1ff;
+--snow: #fffafbff;
