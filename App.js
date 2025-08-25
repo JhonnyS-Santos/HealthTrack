@@ -9,6 +9,7 @@ import Etapa4 from "./src/pages/registro/Etapa 4";
 import Etapa5 from "./src/pages/registro/Etapa 5";
 import Login from "./src/pages/login";
 import Splash from "./src/pages/splash";
+import Home from "./src/pages/home"
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={Home}
+        />
 
         <Stack.Screen
           options={{ headerShown: false }}
