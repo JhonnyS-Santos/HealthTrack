@@ -84,9 +84,9 @@ export default function Home() {
 
         <View style={styles.container}>
             <View style={styles.navbar}> 
-            <View style={{borderWidth:1,width:'40%',height:'70%',justifyContent:'center',alignItems:'center'}}><Text>logo e nome do app     </Text></View>
+            <View style={{borderWidth:1,width:'40%',height:'70%',justifyContent:'center',alignItems:'center'}}><Text>logo e nome do app</Text></View>
             <View style={{borderWidth:1,width:'60%',height:'70%',justifyContent:'center',alignItems:'center'}}>
-                <Text>foto de perfil e nome do usuario     </Text>
+                <Text>foto de perfil e nome do usuario</Text>
             </View>
             </View>
 
