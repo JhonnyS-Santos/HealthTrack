@@ -10,7 +10,8 @@ export default StyleSheet.create({
      
     },
     navbar:{ 
-      borderWidth:1, 
+      borderBottomWidth:2, 
+      
       width:'100%',
       flex:0.2
       , top:'-10%',
@@ -19,7 +20,10 @@ export default StyleSheet.create({
       display:'flex', 
       flexDirection:'row',
       gap:10, 
-      paddingTop:'13%'
+      paddingTop:'13%', 
+      borderRadius:'5%',
+      padding:'2%'
+      ,backgroundColor:'#7de2d1ff'
 
     }, 
     
@@ -48,8 +52,6 @@ export default StyleSheet.create({
     marginBottom:'9%',
     marginHorizontal: 4,
     marginVertical: 5,
-    
-    
   },
 
   adv: {
