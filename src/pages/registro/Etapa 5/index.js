@@ -5,7 +5,9 @@ import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
 import styles from '../styles';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import api, {select} from "../../../../api/axios";
 import * as ImagePicker from 'expo-image-picker';
+import { Alert } from "react-native";
 
 export default function Etapa5() {
     const route = useRoute();
@@ -21,6 +23,33 @@ export default function Etapa5() {
     const [fontsLoaded] = useFonts({
         Roboto: require('../../../../assets/Fontes/Roboto.ttf'),
     });
+
+    const registrar = async () => {
+        try {
+            const novoUsuario = {
+                nomeUsers: "Luis da Silva",
+                emailUsers: "aboba1@email.com",
+                dataNUsers: "1982-01-01",
+                estadoUsers: "RJ",
+                cepUsers: "01234567",
+                bairroUsers: "Centro",
+                ruaUsers: "Rua",
+                numUsers: "123",
+                fotoUsers: "foto.jpg",
+                senhaUsers: "minhasenha"
+            };
+
+            const response = await api.post("/users", novoUsuario);
+            console.log("Usuário inserido:", response.data);
+            Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+        } catch (error) {
+            console.log(error);
+            Alert.alert("Erro", "Não foi possível cadastrar o usuário.");
+        }
+    };
+
+
+
 
 
 
@@ -84,7 +113,7 @@ export default function Etapa5() {
                                 </Pressable>
 
                                 <Pressable
-                                    style={[styles.proximo1]}
+                                    style={[styles.proximo1]} onPress={() => registrar()}
                                 >
                                     <Text style={styles.textoP}>Registrar-se</Text>
                                 </Pressable>
