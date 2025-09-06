@@ -91,6 +91,8 @@ export default function Login() {
                 value={email}
                 onChangeText={setEmail}
                 cursorColor="#fff"
+                autoCapitalize="none"
+                keyboardType="email-address"
                 placeholderTextColor="#fff"
               />
               <Pressable style={styles.icons}>

@@ -63,13 +63,13 @@ export default function Home() {
 
   const logout = () => {
     AsyncStorage.removeItem('userId')
-    .then(() => {
-      console.log('Logout realizado com sucesso');
-      navigation.navigate('Splash');
-    })
-    .catch((error) => {
-      console.log('Erro ao realizar logout:', error);
-    });
+      .then(() => {
+        console.log('Logout realizado com sucesso');
+        navigation.navigate('Splash');
+      })
+      .catch((error) => {
+        console.log('Erro ao realizar logout:', error);
+      });
   }
 
   let delay = 0;
@@ -142,7 +142,7 @@ export default function Home() {
           }}
         >
 
-          {/* <Pressable onPress={() => logout()}><Text>{user.nomeUsers}</Text></Pressable> Apenas para o teste */}
+           <Pressable onPress={() => logout()}><Text>{api.defaults.baseURL}</Text></Pressable>
           <Image
             source={require("../../../assets/Coração.png")}
             style={{ width: "50%", height: "80%" }}
@@ -167,7 +167,11 @@ export default function Home() {
             }}
           >
             <Image
-              source={require("../../../assets/Icones/UserRed.png")}
+              source={
+                user?.fotoUsers
+                  ? { uri: `${api.defaults.baseURL.replace('/api', '')}${user.fotoUsers}` }
+                  : require("../../../assets/Icones/UserRed.png")
+              }
               resizeMode="contain"
               style={{
                 width: "100%",
@@ -177,6 +181,7 @@ export default function Home() {
                 alignItems: "center",
                 display: "flex",
                 flexDirection: "column",
+                borderRadius: 100,
               }}
             ></Image>
           </View>
@@ -200,7 +205,7 @@ export default function Home() {
                   item.id;
                 }}
               >
-                <Image style={[{borderWidth: 1, width: "100%", height: "100%"}]} resizeMode="contain" source={item.img}></Image>
+                <Image style={[{ borderWidth: 1, width: "100%", height: "100%" }]} resizeMode="contain" source={item.img}></Image>
               </Pressable>
             </Animatable.View>
           )}

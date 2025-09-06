@@ -61,18 +61,29 @@ class UserController extends Controller
             $user->emailUsers  = $request->emailUsers;
             $user->dataNUsers  = $request->dataNUsers;
             $user->estadoUsers = $request->estadoUsers;
-            $user->cepUsers    = (int)$request->cepUsers;
+            $user->cepUsers    = (int) $request->cepUsers;
             $user->bairroUsers = $request->bairroUsers;
             $user->ruaUsers    = $request->ruaUsers;
-            $user->numUsers    = (int)$request->numUsers;
-            $user->fotoUsers   = $request->fotoUsers;
+            $user->numUsers    = (int) $request->numUsers;
             $user->senhaUsers  = Hash::make($request->senhaUsers);
+
+            // 🔹 Tratamento da imagem
+            if ($request->hasFile('fotoUsers')) {
+                $file = $request->file('fotoUsers');
+                $path = $file->store('users', 'public'); // vai salvar em storage/app/public/users
+                $user->fotoUsers = '/storage/' . $path;  // salva apenas o caminho no banco
+            }
 
             $user->save();
 
-            return response()->json(['message' => 'Usuário criado com sucesso', 'user' => $user]);
+            return response()->json([
+                'message' => 'Usuário criado com sucesso',
+                'user' => $user
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 

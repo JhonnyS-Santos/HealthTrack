@@ -48,12 +48,10 @@ export default function Etapa5() {
             if (dataN) {
                 if (dataN instanceof Date) {
                     dataNISO = dataN.toISOString().split('T')[0];
-                }
-                else if (dataN.includes('/')) {
+                } else if (dataN.includes('/')) {
                     const [day, month, year] = dataN.split('/');
                     dataNISO = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-                }
-                else {
+                } else {
                     const dateObj = new Date(dataN);
                     if (!isNaN(dateObj.getTime())) {
                         dataNISO = dateObj.toISOString().split('T')[0];
@@ -61,20 +59,33 @@ export default function Etapa5() {
                 }
             }
 
-            const novoUsuario = {
-                nomeUsers: nomeP,
-                emailUsers: emailP,
-                dataNUsers: dataNISO,
-                estadoUsers: estadoP,
-                cepUsers: cepP,
-                bairroUsers: bairroP,
-                ruaUsers: logP,
-                numUsers: numP,
-                // fotoUsers: photoUri, 
-                senhaUsers: senhaC
-            };
+            // Criar FormData para enviar como multipart
+            const formData = new FormData();
+            formData.append("nomeUsers", nomeP);
+            formData.append("emailUsers", emailP);
+            formData.append("dataNUsers", dataNISO);
+            formData.append("estadoUsers", estadoP);
+            formData.append("cepUsers", cepP);
+            formData.append("bairroUsers", bairroP);
+            formData.append("ruaUsers", logP);
+            formData.append("numUsers", numP);
+            formData.append("senhaUsers", senhaC);
 
-            const response = await api.post("/users", novoUsuario);
+            // 🔹 Foto do usuário (se tiver)
+            if (photoUri) {
+                formData.append("fotoUsers", {
+                    uri: photoUri,
+                    name: "profile.jpg",
+                    type: "image/jpeg"
+                });
+            }
+
+            const response = await api.post("/users", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
             Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
             navigation.navigate('Login');
         } catch (error) {
@@ -90,6 +101,7 @@ export default function Etapa5() {
             }
         }
     };
+
 
     // const testConnection = async () => {
     //     try {
@@ -141,7 +153,7 @@ export default function Etapa5() {
                             <TextInput style={styles.input} onFocus={() => setIsFocusedC(true)}
                                 onBlur={() => setIsFocusedC(false)} placeholder={isFocusedC ? '' : 'Confirme a Senha'}
                                 value={senhaC} onChangeText={setSenhaC} cursorColor="#fff" placeholderTextColor="#fff" secureTextEntry={!mostrarSenha} />
-                            <Pressable style={styles.icons} onPress={() => setMostrarSenha(!mostrarSenha)}>
+                            <Pressable style={styles.icons}>
                                 <Image style={styles.icon} ></Image>
                             </Pressable>
                         </View>
