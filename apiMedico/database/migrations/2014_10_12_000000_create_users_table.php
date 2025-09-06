@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('ruaUsers')->nullable();
             $table->string('numUsers')->nullable();
             $table->string('fotoUsers')->nullable();
-            $table->string('senhaUsers')->nullable();
+            $table->string('senhaUsers');
 
         });
     }

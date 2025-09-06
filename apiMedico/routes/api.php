@@ -20,3 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
+Route::post('/login', [UserController::class, 'login']);
+
+Route::get('/test', function () {
+    return response()->json([
+        'message' => 'API funcionando!',
+        'status' => 'success',
+        'timestamp' => now()
+    ]);
+});

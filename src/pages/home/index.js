@@ -13,8 +13,65 @@ import * as NavigationBar from "expo-navigation-bar";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
+import api from "../../../api/axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
+  const [id, setId] = useState('');
+  const [user, setUser] = useState('');
+
+  const lerId = async () => {
+    try {
+      const storedId = await AsyncStorage.getItem('userId');
+      if (storedId !== null) {
+        setId(storedId);
+        console.log('ID do usuário carregado com sucesso:', storedId);
+        return storedId;
+      }
+    } catch (error) {
+      console.log('Erro ao carregar ID do usuário:', error);
+    }
+  };
+
+  useEffect(() => {
+    const buscarUsuario = async () => {
+      try {
+        const userId = await lerId();
+
+        if (!userId) {
+          console.log('Nenhum ID de usuário encontrado');
+          return;
+        }
+
+        const response = await api.get('/users');
+
+        const usuarioEncontrado = response.data.find(user => user.id == userId);
+
+        if (usuarioEncontrado) {
+          setUser(usuarioEncontrado);
+          console.log('Usuário encontrado:', usuarioEncontrado);
+        } else {
+          console.log('Usuário não encontrado');
+        }
+
+      } catch (error) {
+        console.log('Erro ao buscar usuário:', error.response?.data || error.message);
+      }
+    };
+    buscarUsuario();
+  }, []);
+
+  const logout = () => {
+    AsyncStorage.removeItem('userId')
+    .then(() => {
+      console.log('Logout realizado com sucesso');
+      navigation.navigate('Splash');
+    })
+    .catch((error) => {
+      console.log('Erro ao realizar logout:', error);
+    });
+  }
+
   let delay = 0;
 
   const numeros = [
@@ -83,6 +140,8 @@ export default function Home() {
             alignItems: "center",
           }}
         >
+
+          {/* <Pressable onPress={() => logout()}><Text>{user.nomeUsers}</Text></Pressable> Apenas para o teste */}
           <Image
             source={require("../../../assets/Logo.png")}
             style={{ width: "50%", height: "80%" }}

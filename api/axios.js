@@ -9,14 +9,4 @@ const api = axios.create({
   },
 });
 
-export const select = async () => {
-  try {
-    const response = await api.get("/users"); // endpoint correto
-    return response.data[0]; // retorna o usuário
-  } catch (error) {
-    console.log(error);
-    throw error; // lança erro para o try/catch do registrar capturar
-  }
-};
-
 export default api;

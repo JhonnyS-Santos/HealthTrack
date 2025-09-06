@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -9,10 +9,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Etapa3() {
     const route = useRoute();
-    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '' } = route.params || {};
+    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '', logP = '' } = route.params || {};
     const [isFocused, setIsFocused] = useState(false);
     const [isFocusedA, setIsFocusedA] = useState(false);
-    const [logradouro, setLogradouro] = useState('');
+    const [logradouro, setLogradouro] = useState(logP || '');
     const [numero, setNumero] = useState(numP || '');
     const navigation = useNavigation();
 
@@ -26,6 +26,14 @@ export default function Etapa3() {
     const [fontsLoaded] = useFonts({
         Roboto: require('../../../../assets/Fontes/Roboto.ttf'),
     });
+
+    const verificar = () => {
+        if (logradouro === '' || numero === '') {
+            Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
+        } else {
+            navigation.navigate('Etapa4', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP: numero, photoUriP, senhaP, senhaCP, logP: logradouro });
+        }
+    }
 
     if (!fontsLoaded) return null;
 
@@ -99,7 +107,7 @@ export default function Etapa3() {
                                 </Pressable>
 
                                 <Pressable
-                                    onPress={() => navigation.navigate('Etapa4', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP: numero, photoUriP, senhaP, senhaCP })}
+                                    onPress={() => verificar()}
                                     style={[styles.proximo1]}
                                 >
                                     <Text style={styles.textoP}>Próximo</Text>

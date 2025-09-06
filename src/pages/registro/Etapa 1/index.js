@@ -1,15 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../styles';
+import api from "../../../../api/axios";
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Etapa1() {
   const route = useRoute();
-  const { nomeP = '', emailP = '', dataN = 'Data de Nascimento', cepP = '', estadoP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = ''} = route.params || {};
+  const { nomeP = '', emailP = '', dataN = 'Data de Nascimento', cepP = '', estadoP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '' } = route.params || {};
   const [isFocused, setIsFocused] = useState(false);
   const [isFocusedA, setIsFocusedA] = useState(false);
   const [mostrar, setMostrar] = useState(false);
@@ -19,12 +20,11 @@ export default function Etapa1() {
   const [nome, setNome] = useState(nomeP)
   const [email, setEmail] = useState(emailP)
 
-  
-
   useEffect(() => {
     NavigationBar.setVisibilityAsync('hidden');
     NavigationBar.setBackgroundColorAsync('#000000ff');
   }, []);
+
 
   const aoMudar = (event, novaData) => {
     setMostrar(false);
@@ -46,6 +46,29 @@ export default function Etapa1() {
   const [fontsLoaded] = useFonts({
     Roboto: require('../../../../assets/Fontes/Roboto.ttf'),
   });
+
+  const verificar = async () => {
+    const emailLower = email.toLowerCase();
+
+    try {
+      const response = await api.get("/users");
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].emailUsers === email) {
+          Alert.alert("Atenção", "Email ja cadastrado");
+          return;
+        }
+      }
+    } catch (error) {
+      console.log("Erro ao buscar usuários:", error.response?.data || error.message);
+    }
+
+
+    if (nome === '' || email === '' || valor === 'Data de Nascimento') {
+      Alert.alert("Atenção", "Por favor, preencha todos os campos.");
+    } else {
+      navigation.navigate('Etapa2', { nomeP: nome, emailP: emailLower, dataN: valor, cepP, estadoP, bairroP, numP, photoUriP, senhaP, senhaCP })
+    }
+  };
 
   if (!fontsLoaded) {
     return null;
@@ -83,7 +106,11 @@ export default function Etapa1() {
                 onBlur={() => setIsFocusedA(false)} placeholder={isFocusedA ? '' : 'Digite seu Email'} cursorColor="#fff"
                 value={email}
                 onChangeText={setEmail}
-                placeholderTextColor="#fff" />
+                placeholderTextColor="#fff"
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+
               <Pressable style={styles.icons}>
                 <Image
                   style={styles.icon}
@@ -112,7 +139,7 @@ export default function Etapa1() {
             </View>
 
             <View style={[styles.inputC, { flexDirection: 'column', }]}>
-              <Pressable onPress={() => navigation.navigate('Etapa2', { nomeP: nome, emailP: email, dataN: valor, cepP, estadoP, bairroP, numP, photoUriP, senhaP, senhaCP })} style={[styles.proximo]}><Text style={styles.textoP}>Proximo</Text></Pressable>
+              <Pressable onPress={() => verificar()} style={[styles.proximo]}><Text style={styles.textoP}>Proximo</Text></Pressable>
               <View style={styles.pergunta}>
                 <Text>Ja tem uma Conta?</Text>
                 <Pressable onPress={() => navigation.navigate('Login')}><Text style={[{ color: '#339989ff', textDecorationLine: 'underline' }]}>Entrar</Text></Pressable>

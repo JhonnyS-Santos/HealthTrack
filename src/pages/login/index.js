@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
 import styles from '../registro/styles';
 import { useNavigation } from '@react-navigation/native';
+import api from "../../../api/axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const [isFocused, setIsFocused] = useState(false);
@@ -19,6 +21,42 @@ export default function Login() {
     NavigationBar.setBackgroundColorAsync('#000000ff');
   }, []);
 
+  const salvarId = async (id) => {
+    try {
+      await AsyncStorage.setItem('userId', id.toString());
+      console.log('ID do usuário salvo com sucesso:', id);
+    } catch (error) {
+      console.log('Erro ao salvar ID do usuário:', error);
+    }
+  };
+
+  const entrar = async () => {
+    if (!email || !senha) {
+      alert('Preencha todos os campos');
+      return;
+    }
+
+    try {
+      const response = await api.post('/login', {
+        emailUsers: email.toLowerCase(),
+        senhaUsers: senha
+      });
+
+      if (response.data.success) {
+        Alert.alert(
+          'Sucesso',
+          `Login realizado com sucesso!`
+        );
+        salvarId(response.data.user.id);
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('Erro', response.data.message);
+      }
+    } catch (error) {
+      console.log('Erro ao logar:', error.response?.data || error.message);
+      Alert.alert('Não encotrado', 'Usuario ou senha incorretos');
+    }
+  };
 
   const [fontsLoaded] = useFonts({
     Roboto: require('../../../assets/Fontes/Roboto.ttf'),
@@ -89,7 +127,7 @@ export default function Login() {
 
 
             <View style={[styles.inputC, { flexDirection: 'column', }]}>
-              <Pressable style={[styles.proximo]}><Text style={styles.textoP}>Entrar</Text></Pressable>
+              <Pressable onPress={() => entrar()} style={[styles.proximo]}><Text style={styles.textoP}>Entrar</Text></Pressable>
               <View style={styles.pergunta}>
                 <Text>Ja tem uma Conta?</Text>
                 <Pressable onPress={() => navigation.navigate('Etapa1')}><Text style={[{ color: '#339989ff', textDecorationLine: 'underline' }]}>Registre-se</Text></Pressable>

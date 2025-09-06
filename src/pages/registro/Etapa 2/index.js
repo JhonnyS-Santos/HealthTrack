@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, Pressable, Image, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
@@ -9,7 +9,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Etapa2() {
   const route = useRoute();
-  const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP= '', senhaCP = '' } = route.params || {};
+  const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '' } = route.params || {};
   const [cep, setCep] = useState(cepP);
   const [isFocused, setIsFocused] = useState(false);
   const [isFocusedA, setIsFocusedA] = useState(false);
@@ -23,6 +23,14 @@ export default function Etapa2() {
     NavigationBar.setBackgroundColorAsync('#000000ff');
   }, []);
 
+  const verificar = () => {
+    if (estado === '' || cep === '' || bairro === '') {
+      Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
+
+    } else {
+      navigation.navigate('Etapa3', { nomeP, emailP, dataN, estadoP: estado, cepP: cep, bairroP: bairro, numP, photoUriP, senhaP, senhaCP });
+    }
+  }
 
   const [fontsLoaded] = useFonts({
     Roboto: require('../../../../assets/Fontes/Roboto.ttf'),
@@ -105,7 +113,7 @@ export default function Etapa2() {
             <View style={[styles.inputC, { flexDirection: 'column', }]}>
               <View style={[styles.bots, { flexDirection: 'row', }]}>
                 <Pressable onPress={() => navigation.navigate('Etapa1', { nomeP, emailP, dataN, cepP, estadoP, bairroP, numP, photoUriP, senhaP, senhaCP })} style={[styles.proximo1, { backgroundColor: '#339989ff' }]}><Text style={styles.textoP}>Voltar</Text></Pressable>
-                <Pressable onPress={() => navigation.navigate('Etapa3', { nomeP, emailP, dataN, estadoP: estado, cepP: cep, bairroP: bairro, numP, photoUriP, senhaP, senhaCP })} style={[styles.proximo1]}><Text style={styles.textoP}>Proximo</Text></Pressable>
+                <Pressable onPress={() => verificar()} style={[styles.proximo1]}><Text style={styles.textoP}>Proximo</Text></Pressable>
               </View>
 
               <View style={styles.pergunta}>

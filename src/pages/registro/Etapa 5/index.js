@@ -5,13 +5,13 @@ import { useFonts } from 'expo-font';
 import * as NavigationBar from 'expo-navigation-bar';
 import styles from '../styles';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import api, {select} from "../../../../api/axios";
+import api from "../../../../api/axios";
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from "react-native";
 
 export default function Etapa5() {
     const route = useRoute();
-    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP, senhaP, senhaCP } = route.params || {};
+    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP, senhaP, senhaCP, logP = '' } = route.params || {};
     const navigation = useNavigation();
     const [photoUri, setPhotoUri] = useState(null || photoUriP);
     const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -19,39 +19,86 @@ export default function Etapa5() {
     const [senhaC, setSenhaC] = useState('' || senhaCP);
     const [isFocusedB, setIsFocusedB] = useState(false);
     const [isFocusedC, setIsFocusedC] = useState(false);
-    const [isFocusedD, setIsFocusedD] = useState(false);
+
+
     const [fontsLoaded] = useFonts({
         Roboto: require('../../../../assets/Fontes/Roboto.ttf'),
     });
 
     const registrar = async () => {
+        if (senha === '' || senhaC === '') {
+            Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
+            return;
+        }
+
+        if (senha !== senhaC) {
+            Alert.alert('Atenção', 'As senhas não coincidem.');
+            return;
+        }
+
+        if (senha.length < 4) {
+            Alert.alert('Atenção', 'A senha deve ter pelo menos 4 caracteres.');
+            return;
+        }
+
         try {
+            // Converter a data para formato ISO (YYYY-MM-DD)
+            let dataNISO;
+
+            if (dataN) {
+                if (dataN instanceof Date) {
+                    dataNISO = dataN.toISOString().split('T')[0];
+                }
+                else if (dataN.includes('/')) {
+                    const [day, month, year] = dataN.split('/');
+                    dataNISO = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                }
+                else {
+                    const dateObj = new Date(dataN);
+                    if (!isNaN(dateObj.getTime())) {
+                        dataNISO = dateObj.toISOString().split('T')[0];
+                    }
+                }
+            }
+
             const novoUsuario = {
-                nomeUsers: "Luis da Silva",
-                emailUsers: "aboba1@email.com",
-                dataNUsers: "1982-01-01",
-                estadoUsers: "RJ",
-                cepUsers: "01234567",
-                bairroUsers: "Centro",
-                ruaUsers: "Rua",
-                numUsers: "123",
-                fotoUsers: "foto.jpg",
-                senhaUsers: "minhasenha"
+                nomeUsers: nomeP,
+                emailUsers: emailP,
+                dataNUsers: dataNISO,
+                estadoUsers: estadoP,
+                cepUsers: cepP,
+                bairroUsers: bairroP,
+                ruaUsers: logP,
+                numUsers: numP,
+                // fotoUsers: photoUri, 
+                senhaUsers: senhaC
             };
 
             const response = await api.post("/users", novoUsuario);
-            console.log("Usuário inserido:", response.data);
-            Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+            Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+            navigation.navigate('Login');
         } catch (error) {
-            console.log(error);
-            Alert.alert("Erro", "Não foi possível cadastrar o usuário.");
+            console.log("Erro completo:", error.response?.data || error.message);
+
+            if (error.response?.data?.message) {
+                Alert.alert("Erro", error.response.data.message);
+            } else if (error.response?.data?.errors) {
+                const errors = Object.values(error.response.data.errors).flat();
+                Alert.alert("Erro de validação", errors.join('\n'));
+            } else {
+                Alert.alert("Erro", "Não foi possível cadastrar o usuário.");
+            }
         }
     };
 
-
-
-
-
+    // const testConnection = async () => {
+    //     try {
+    //         const response = await api.get("/test");
+    //         console.log("Conexão bem-sucedida:", response.data);
+    //     } catch (error) {
+    //         console.log("Falha na conexão:", error.message);
+    //     }
+    // };
 
     useEffect(() => {
         NavigationBar.setVisibilityAsync('hidden');
@@ -105,7 +152,7 @@ export default function Etapa5() {
                             <View style={[styles.bots, { flexDirection: 'row' }]}>
                                 <Pressable
                                     onPress={() =>
-                                        navigation.navigate('Etapa4', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP, photoUri, senhaP: senha, senhaCP: senhaC })
+                                        navigation.navigate('Etapa4', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP, photoUri, senhaP: senha, senhaCP: senhaC, logP })
                                     }
                                     style={[styles.proximo1, { backgroundColor: '#339989ff' }]}
                                 >

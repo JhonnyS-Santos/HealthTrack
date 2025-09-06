@@ -14,8 +14,34 @@ class UserController extends Controller
     public function index()
     {
         $users = UserModel::all();
-
         return $users;
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'emailUsers' => 'required|email',
+            'senhaUsers' => 'required'
+        ]);
+
+        // Busca o usuário pelo email
+        $user = UserModel::where('emailUsers', strtolower($request->emailUsers))->first();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'Email ou senha incorretos'], 401);
+        }
+
+        // Verifica a senha com Hash::check
+        if (!Hash::check($request->senhaUsers, $user->senhaUsers)) {
+            return response()->json(['success' => false, 'message' => 'Email ou senha incorretos'], 401);
+        }
+
+        // Login bem-sucedido
+        return response()->json([
+            'success' => true,
+            'message' => 'Login realizado com sucesso',
+            'user' => $user
+        ]);
     }
 
     /**
@@ -32,7 +58,7 @@ class UserController extends Controller
             $user = new UserModel();
 
             $user->nomeUsers   = $request->nomeUsers;
-            $user->emailUsers  = $request->email;
+            $user->emailUsers  = $request->emailUsers;
             $user->dataNUsers  = $request->dataNUsers;
             $user->estadoUsers = $request->estadoUsers;
             $user->cepUsers    = (int)$request->cepUsers;

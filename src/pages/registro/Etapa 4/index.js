@@ -9,7 +9,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function Etapa4() {
     const route = useRoute();
-    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP, senhaCP } = route.params || {};
+    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP, senhaCP, logP = '' } = route.params || {};
     const navigation = useNavigation();
     const [photoUri, setPhotoUri] = useState(null || photoUriP);
     const [fontsLoaded] = useFonts({
@@ -144,7 +144,7 @@ export default function Etapa4() {
                                 <Pressable
                                     onPress={() => {
                                         navigation.navigate('Etapa5', {
-                                            nomeP, emailP, dataN, estadoP, cepP, bairroP, numP, photoUriP: photoUri, senhaP, senhaCP
+                                            nomeP, emailP, dataN, estadoP, cepP, bairroP, numP, photoUriP: photoUri, senhaP, senhaCP, logP
                                         });
                                     }}
                                     style={[styles.proximo1]}
