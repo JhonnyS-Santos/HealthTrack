@@ -77,6 +77,7 @@ export default function Home() {
   const numeros = [
     {
       id: 1,
+      img: require('./img/Primeiro.png')
     },
 
     {
@@ -143,8 +144,9 @@ export default function Home() {
 
           {/* <Pressable onPress={() => logout()}><Text>{user.nomeUsers}</Text></Pressable> Apenas para o teste */}
           <Image
-            source={require("../../../assets/Logo.png")}
+            source={require("../../../assets/Coração.png")}
             style={{ width: "50%", height: "80%" }}
+            resizeMode="contain"
           />
         </View>
         <View
@@ -158,7 +160,6 @@ export default function Home() {
         >
           <View
             style={{
-              borderWidth: 1,
               width: "37%",
               height: "75%",
               borderRadius: "50%",
@@ -166,10 +167,11 @@ export default function Home() {
             }}
           >
             <Image
-              source={require("../../../assets/Icones/Carro.png")}
+              source={require("../../../assets/Icones/UserRed.png")}
+              resizeMode="contain"
               style={{
                 width: "100%",
-                height: "80%",
+                height: "100%",
                 resizeMode: "contain",
                 justifyContent: "center",
                 alignItems: "center",
@@ -198,7 +200,7 @@ export default function Home() {
                   item.id;
                 }}
               >
-                <Text style={[styles.botoes]}>{item.id}</Text>
+                <Image style={[{borderWidth: 1, width: "100%", height: "100%"}]} resizeMode="contain" source={item.img}></Image>
               </Pressable>
             </Animatable.View>
           )}
