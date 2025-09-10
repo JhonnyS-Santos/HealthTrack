@@ -6,6 +6,7 @@ import {
   Pressable,
   Image,
   FlatList,
+  Modal
 } from "react-native";
 import { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -15,15 +16,18 @@ import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import api from "../../../api/axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BlurView } from 'expo-blur';
+
 
 export default function Home() {
   const [id, setId] = useState('');
   const [user, setUser] = useState('');
-
+  const[verM,setVerM]=useState(false)
   const lerId = async () => {
     try {
       const storedId = await AsyncStorage.getItem('userId');
       if (storedId !== null) {
+
         setId(storedId);
         console.log('ID do usuário carregado com sucesso:', storedId);
         return storedId;
@@ -141,7 +145,7 @@ export default function Home() {
             alignItems: "center",
             flexDirection:'row',
            
-           
+           marginLeft:'14%'
           }}
         >
 
@@ -166,7 +170,7 @@ export default function Home() {
                 marginRight:10
               }}
             ></Image>
-            <Text style={{color:'white',fontSize:22}}>Ola , {user.nomeUsers}</Text>
+            <Text style={{color:'white',fontSize:22,fontWeight:900,marginTop:20}}>Olá, {user.nomeUsers}</Text>
         </View>
         <View
           style={{
@@ -185,11 +189,13 @@ export default function Home() {
               alignSelf: "flex-end",
             }}
           >
+            <Pressable onPress={()=>setVerM(true)}> 
             <Image
             source={require('../../../assets/Icones/menu-aberto.png')}
             style={{ width: "70%", height: "100%" }}
             resizeMode="contain"
           />
+          </Pressable>
             
           </View>
         </View>
@@ -219,6 +225,36 @@ export default function Home() {
           keyExtractor={(item) => item.id}
         />
       </View>
+
+      <Modal visible={verM} transparent={true} > 
+      <BlurView intensity={70} tint="dark" style={{ width: '100%', height: '100%' }}>
+          <View style={styles.container2}>
+          
+
+          <View style={{flex:0.5,width:'80%',backgroundColor:'#fffafbff' , borderRadius:25,borderWidth:1,justifyContent:'center',alignItems:'center'}}>
+
+            <Pressable onPress={()=>setVerM(false)}>
+              <Text>
+                sair
+              </Text>
+            
+            </Pressable>
+            <View style={{flex:0.8,width:'100%',borderWidth:1,justifyContent:'space-between',alignItems:'center',
+              display:'flex',flexDirection:'column'}}>
+                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
+                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
+                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
+                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
+                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
+               
+            </View>
+          
+          </View>
+        
+          </View>
+          </BlurView>
+        
+      </Modal>
 
       <StatusBar style="auto" hidden={true} />
     </View>

@@ -9,6 +9,15 @@ export default StyleSheet.create({
       gap:10 ,
      
     },
+    container2: {
+      flex: 1,
+      
+
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap:10 ,
+     
+    },
     navbar:{ 
 
       
