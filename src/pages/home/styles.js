@@ -10,7 +10,7 @@ export default StyleSheet.create({
      
     },
     navbar:{ 
-      borderBottomWidth:2, 
+
       
       width:'100%',
       flex:0.2

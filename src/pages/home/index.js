@@ -139,15 +139,34 @@ export default function Home() {
             height: "70%",
             justifyContent: "center",
             alignItems: "center",
+            flexDirection:'row',
+           
+           
           }}
         >
 
-           <Pressable onPress={() => logout()}><Text>{api.defaults.baseURL}</Text></Pressable>
+          
+          
           <Image
-            source={require("../../../assets/Coração.png")}
-            style={{ width: "50%", height: "80%" }}
-            resizeMode="contain"
-          />
+              source={
+                user?.fotoUsers
+                  ? { uri: `${api.defaults.baseURL.replace('/api', '')}${user.fotoUsers}` }
+                  : require("../../../assets/Icones/UserRed.png")
+              }
+              resizeMode="contain"
+              style={{
+                width: "50%",
+                height: "65%",
+                resizeMode: "contain",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+                borderRadius: 500,
+                marginRight:10
+              }}
+            ></Image>
+            <Text style={{color:'white',fontSize:22}}>Ola , {user.nomeUsers}</Text>
         </View>
         <View
           style={{
@@ -167,23 +186,11 @@ export default function Home() {
             }}
           >
             <Image
-              source={
-                user?.fotoUsers
-                  ? { uri: `${api.defaults.baseURL.replace('/api', '')}${user.fotoUsers}` }
-                  : require("../../../assets/Icones/UserRed.png")
-              }
-              resizeMode="contain"
-              style={{
-                width: "100%",
-                height: "100%",
-                resizeMode: "contain",
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: 100,
-              }}
-            ></Image>
+            source={require('../../../assets/Icones/menu-aberto.png')}
+            style={{ width: "70%", height: "100%" }}
+            resizeMode="contain"
+          />
+            
           </View>
         </View>
       </View>
