@@ -40,7 +40,7 @@ export default function Etapa4() {
             const result = await ImagePicker.launchCameraAsync({
                 allowsEditing: true,
                 aspect: [5, 5],
-                quality: 0.8,
+                quality: 0.5,
                 cameraType: ImagePicker.CameraType.back,
             });
 

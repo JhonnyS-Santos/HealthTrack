@@ -2,11 +2,12 @@ import { StatusBar } from "expo-status-bar";
 import {
   Text,
   View,
-  TextInput,
   Pressable,
   Image,
   FlatList,
-  Modal
+  Modal,
+  ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -18,16 +19,87 @@ import api from "../../../api/axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BlurView } from 'expo-blur';
 
+// Componente de imagem com loading
+const ImageWithLoader = ({ source, style, onError, ...props }) => {
+  const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <View style={[style, { justifyContent: 'center', alignItems: 'center' }]}>
+      {/* Loading enquanto carrega */}
+      {loading && (
+        <View style={[
+          style, 
+          { 
+            position: 'absolute', 
+            justifyContent: 'center', 
+            alignItems: 'center',
+            backgroundColor: '#f0f0f0',
+            borderRadius: style.borderRadius || 0
+          }
+        ]}>
+          <ActivityIndicator size="small" color="#999" />
+        </View>
+      )}
+      
+      {/* Imagem principal */}
+      <Image
+        source={source}
+        style={[
+          style,
+          { 
+            opacity: loading ? 0 : 1,
+            position: loading ? 'absolute' : 'relative'
+          }
+        ]}
+        onLoadStart={() => {
+          setLoading(true);
+          setHasError(false);
+        }}
+        onLoad={() => {
+          setLoading(false);
+          setHasError(false);
+          console.log("Imagem carregada com sucesso");
+        }}
+        onLoadEnd={() => {
+          setLoading(false);
+        }}
+        onError={(e) => {
+          console.log("Erro ao carregar imagem:", e.nativeEvent);
+          setLoading(false);
+          setHasError(true);
+          if (onError) onError(e);
+        }}
+        {...props}
+      />
+      
+      {/* Fallback em caso de erro */}
+      {hasError && (
+        <Image
+          source={require("../../../assets/Icones/UserRed.png")}
+          style={[
+            style,
+            { position: 'absolute' }
+          ]}
+          resizeMode="cover"
+        />
+      )}
+    </View>
+  );
+};
 
 export default function Home() {
   const [id, setId] = useState('');
   const [user, setUser] = useState('');
-  const[verM,setVerM]=useState(false)
+  const width = Dimensions.get('screen').width;
+  const height = Dimensions.get('screen').height;
+  const [verM, setVerM] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   const lerId = async () => {
     try {
       const storedId = await AsyncStorage.getItem('userId');
       if (storedId !== null) {
-
         setId(storedId);
         console.log('ID do usuário carregado com sucesso:', storedId);
         return storedId;
@@ -44,11 +116,11 @@ export default function Home() {
 
         if (!userId) {
           console.log('Nenhum ID de usuário encontrado');
+          logout();
           return;
         }
 
         const response = await api.get('/users');
-
         const usuarioEncontrado = response.data.find(user => user.id == userId);
 
         if (usuarioEncontrado) {
@@ -56,10 +128,12 @@ export default function Home() {
           console.log('Usuário encontrado:', usuarioEncontrado);
         } else {
           console.log('Usuário não encontrado');
+          logout();
         }
 
       } catch (error) {
         console.log('Erro ao buscar usuário:', error.response?.data || error.message);
+        logout();
       }
     };
     buscarUsuario();
@@ -76,48 +150,21 @@ export default function Home() {
       });
   }
 
-  let delay = 0;
-
   const numeros = [
-    {
-      id: 1,
-      img: require('./img/Primeiro.png')
-    },
-
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-    {
-      id: 7,
-    },
-    {
-      id: 8,
-    },
-    {
-      id: 9,
-    },
-    {
-      id: 10,
-    },
-    {
-      id: 11,
-    },
-    {
-      id: 12,
-    },
+    { id: 1, img: require('./img/Primeiro.png') },
+    { id: 2, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 3, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 4, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 5, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 6, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 7, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 8, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 9, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 10, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 11, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 12, img: require('../../../assets/Icones/Pasta.png') },
   ];
+  
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -134,7 +181,6 @@ export default function Home() {
   }
 
   return (
-    //nutritionix api para caloria
     <View style={styles.container}>
       <View style={styles.navbar}>
         <View
@@ -143,42 +189,51 @@ export default function Home() {
             height: "70%",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection:'row',
-           
-           marginLeft:'14%'
+            flexDirection: 'row',
+            marginLeft: '20%'
           }}
         >
-
+          {/* IMAGEM COM LOADING - SUBSTITUÍDA AQUI */}
+          <ImageWithLoader
+            source={
+              user?.fotoUsers && !imageError
+                ? { 
+                    uri: `${api.defaults.baseURL.replace('/api', '')}${user.fotoUsers}`,
+                    headers: { 'Cache-Control': 'no-cache' }
+                  }
+                : require("../../../assets/Icones/UserRed.png")
+            }
+            style={{
+              width: width * 0.2,
+              height: width * 0.2,
+              borderRadius: width * 0.5,
+              borderWidth: width * 0.008,
+              borderColor: '#fffafbff',
+            }}
+            onError={(e) => {
+              console.log("Erro ao carregar imagem:", e.nativeEvent);
+              setImageError(true);
+            }}
+          />
           
-          
-          <Image
-              source={
-                user?.fotoUsers
-                  ? { uri: `${api.defaults.baseURL.replace('/api', '')}${user.fotoUsers}` }
-                  : require("../../../assets/Icones/UserRed.png")
-              }
-              resizeMode="contain"
-              style={{
-                width: "50%",
-                height: "65%",
-                resizeMode: "contain",
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "column",
-                borderRadius: 500,
-                marginRight:10
-              }}
-            ></Image>
-            <Text style={{color:'white',fontSize:22,fontWeight:900,marginTop:20}}>Olá, {user.nomeUsers}</Text>
+          <Text style={{ 
+            color: 'white', 
+            fontSize: width * 0.06, 
+            fontWeight: '900', 
+            marginTop: width * 0.07, 
+            marginLeft: width * 0.02 
+          }}>
+            Olá, {user.nomeUsers}
+          </Text>
         </View>
+        
         <View
           style={{
             width: "60%",
             height: "70%",
             justifyContent: "center",
             alignItems: "center",
-            paddingRight: "3%",
+            paddingRight: "7%",
           }}
         >
           <View
@@ -189,14 +244,13 @@ export default function Home() {
               alignSelf: "flex-end",
             }}
           >
-            <Pressable onPress={()=>setVerM(true)}> 
-            <Image
-            source={require('../../../assets/Icones/menu-aberto.png')}
-            style={{ width: "70%", height: "100%" }}
-            resizeMode="contain"
-          />
-          </Pressable>
-            
+            <Pressable onPress={() => setVerM(true)}>
+              <Image
+                source={require('../../../assets/Icones/menu-aberto.png')}
+                style={{ width: "70%", height: "100%" }}
+                resizeMode="contain"
+              />
+            </Pressable>
           </View>
         </View>
       </View>
@@ -218,42 +272,52 @@ export default function Home() {
                   item.id;
                 }}
               >
-                <Image style={[{ borderWidth: 1, width: "100%", height: "100%" }]} resizeMode="contain" source={item.img}></Image>
+                {item.img && (
+                  <Image 
+                    style={[{ borderWidth: 1, width: "100%", height: "100%" }]} 
+                    resizeMode="contain" 
+                    source={item.img}
+                  />
+                )}
               </Pressable>
             </Animatable.View>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
         />
       </View>
 
-      <Modal visible={verM} transparent={true} > 
-      <BlurView intensity={70} tint="dark" style={{ width: '100%', height: '100%' }}>
+      <Modal visible={verM} transparent={true}>
+        <BlurView intensity={70} tint="dark" style={{ width: '100%', height: '100%' }}>
           <View style={styles.container2}>
-          
-
-          <View style={{flex:0.5,width:'80%',backgroundColor:'#fffafbff' , borderRadius:25,borderWidth:1,justifyContent:'center',alignItems:'center'}}>
-
-            <Pressable onPress={()=>setVerM(false)}>
-              <Text>
-                sair
-              </Text>
-            
-            </Pressable>
-            <View style={{flex:0.8,width:'100%',borderWidth:1,justifyContent:'space-between',alignItems:'center',
-              display:'flex',flexDirection:'column'}}>
-                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
-                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
-                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
-                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
-                <View style={{width:'100%',height:'20%',borderWidth:1}}><Text>a</Text></View>
-               
+            <View style={{ 
+              flex: 0.5, 
+              width: '80%', 
+              backgroundColor: '#fffafbff', 
+              borderRadius: width * 0.07, 
+              borderWidth: 1, 
+              justifyContent: 'center', 
+              alignItems: 'center' 
+            }}>
+              <Pressable onPress={() => setVerM(false)}>
+                <Text>sair</Text>
+              </Pressable>
+              <View style={{
+                flex: 0.8, 
+                width: '100%', 
+                borderWidth: 1, 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                flexDirection: 'column'
+              }}>
+                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
+                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
+                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
+                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
+                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
+              </View>
             </View>
-          
           </View>
-        
-          </View>
-          </BlurView>
-        
+        </BlurView>
       </Modal>
 
       <StatusBar style="auto" hidden={true} />
