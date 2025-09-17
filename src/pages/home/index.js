@@ -7,7 +7,7 @@ import {
   FlatList,
   Modal,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -16,8 +16,8 @@ import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import api from "../../../api/axios";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BlurView } from 'expo-blur';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BlurView } from "expo-blur";
 
 // Componente de imagem com loading
 const ImageWithLoader = ({ source, style, onError, ...props }) => {
@@ -25,32 +25,34 @@ const ImageWithLoader = ({ source, style, onError, ...props }) => {
   const [hasError, setHasError] = useState(false);
 
   return (
-    <View style={[style, { justifyContent: 'center', alignItems: 'center' }]}>
+    <View style={[style, { justifyContent: "center", alignItems: "center" }]}>
       {/* Loading enquanto carrega */}
       {loading && (
-        <View style={[
-          style, 
-          { 
-            position: 'absolute', 
-            justifyContent: 'center', 
-            alignItems: 'center',
-            backgroundColor: '#f0f0f0',
-            borderRadius: style.borderRadius || 0
-          }
-        ]}>
+        <View
+          style={[
+            style,
+            {
+              position: "absolute",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#f0f0f0",
+              borderRadius: style.borderRadius || 0,
+            },
+          ]}
+        >
           <ActivityIndicator size="small" color="#999" />
         </View>
       )}
-      
+
       {/* Imagem principal */}
       <Image
         source={source}
         style={[
           style,
-          { 
+          {
             opacity: loading ? 0 : 1,
-            position: loading ? 'absolute' : 'relative'
-          }
+            position: loading ? "absolute" : "relative",
+          },
         ]}
         onLoadStart={() => {
           setLoading(true);
@@ -72,15 +74,12 @@ const ImageWithLoader = ({ source, style, onError, ...props }) => {
         }}
         {...props}
       />
-      
+
       {/* Fallback em caso de erro */}
       {hasError && (
         <Image
           source={require("../../../assets/Icones/UserRed.png")}
-          style={[
-            style,
-            { position: 'absolute' }
-          ]}
+          style={[style, { position: "absolute" }]}
           resizeMode="cover"
         />
       )}
@@ -89,23 +88,24 @@ const ImageWithLoader = ({ source, style, onError, ...props }) => {
 };
 
 export default function Home() {
-  const [id, setId] = useState('');
-  const [user, setUser] = useState('');
-  const width = Dimensions.get('screen').width;
-  const height = Dimensions.get('screen').height;
+  const [id, setId] = useState("");
+  const [user, setUser] = useState("");
+  const width = Dimensions.get("screen").width;
+  const height = Dimensions.get("screen").height;
   const [verM, setVerM] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [animacao,setAnimacao]=useState('fadeInRight')
 
   const lerId = async () => {
     try {
-      const storedId = await AsyncStorage.getItem('userId');
+      const storedId = await AsyncStorage.getItem("userId");
       if (storedId !== null) {
         setId(storedId);
-        console.log('ID do usuário carregado com sucesso:', storedId);
+        console.log("ID do usuário carregado com sucesso:", storedId);
         return storedId;
       }
     } catch (error) {
-      console.log('Erro ao carregar ID do usuário:', error);
+      console.log("Erro ao carregar ID do usuário:", error);
     }
   };
 
@@ -115,24 +115,28 @@ export default function Home() {
         const userId = await lerId();
 
         if (!userId) {
-          console.log('Nenhum ID de usuário encontrado');
+          console.log("Nenhum ID de usuário encontrado");
           logout();
           return;
         }
 
-        const response = await api.get('/users');
-        const usuarioEncontrado = response.data.find(user => user.id == userId);
+        const response = await api.get("/users");
+        const usuarioEncontrado = response.data.find(
+          (user) => user.id == userId
+        );
 
         if (usuarioEncontrado) {
           setUser(usuarioEncontrado);
-          console.log('Usuário encontrado:', usuarioEncontrado);
+          console.log("Usuário encontrado:", usuarioEncontrado);
         } else {
-          console.log('Usuário não encontrado');
+          console.log("Usuário não encontrado");
           logout();
         }
-
       } catch (error) {
-        console.log('Erro ao buscar usuário:', error.response?.data || error.message);
+        console.log(
+          "Erro ao buscar usuário:",
+          error.response?.data || error.message
+        );
         logout();
       }
     };
@@ -140,31 +144,31 @@ export default function Home() {
   }, []);
 
   const logout = () => {
-    AsyncStorage.removeItem('userId')
+    AsyncStorage.removeItem("userId")
       .then(() => {
-        console.log('Logout realizado com sucesso');
-        navigation.navigate('Splash');
+        console.log("Logout realizado com sucesso");
+        navigation.navigate("Splash");
       })
       .catch((error) => {
-        console.log('Erro ao realizar logout:', error);
+        console.log("Erro ao realizar logout:", error);
       });
-  }
+  };
 
   const numeros = [
-    { id: 1, img: require('./img/Primeiro.png') },
-    { id: 2, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 3, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 4, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 5, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 6, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 7, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 8, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 9, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 10, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 11, img: require('../../../assets/Icones/Pasta.png') },
-    { id: 12, img: require('../../../assets/Icones/Pasta.png') },
+    { id: 1, img: require("./img/Primeiro.png") },
+    { id: 2, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 3, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 4, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 5, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 6, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 7, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 8, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 9, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 10, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 11, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 12, img: require("../../../assets/Icones/Pasta.png") },
   ];
-  
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -189,17 +193,19 @@ export default function Home() {
             height: "70%",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: 'row',
-            marginLeft: '20%'
+            flexDirection: "row",
+            marginLeft: "20%",
           }}
         >
           {/* IMAGEM COM LOADING - SUBSTITUÍDA AQUI */}
           <ImageWithLoader
             source={
               user?.fotoUsers && !imageError
-                ? { 
-                    uri: `${api.defaults.baseURL.replace('/api', '')}${user.fotoUsers}`,
-                    headers: { 'Cache-Control': 'no-cache' }
+                ? {
+                    uri: `${api.defaults.baseURL.replace("/api", "")}${
+                      user.fotoUsers
+                    }`,
+                    headers: { "Cache-Control": "no-cache" },
                   }
                 : require("../../../assets/Icones/UserRed.png")
             }
@@ -208,25 +214,27 @@ export default function Home() {
               height: width * 0.2,
               borderRadius: width * 0.5,
               borderWidth: width * 0.008,
-              borderColor: '#fffafbff',
+              borderColor: "#fffafbff",
             }}
             onError={(e) => {
               console.log("Erro ao carregar imagem:", e.nativeEvent);
               setImageError(true);
             }}
           />
-          
-          <Text style={{ 
-            color: 'white', 
-            fontSize: width * 0.06, 
-            fontWeight: '900', 
-            marginTop: width * 0.07, 
-            marginLeft: width * 0.02 
-          }}>
+
+          <Text
+            style={{
+              color: "white",
+              fontSize: width * 0.06,
+              fontWeight: "900",
+              marginTop: width * 0.07,
+              marginLeft: width * 0.02,
+            }}
+          >
             Olá, {user.nomeUsers}
           </Text>
         </View>
-        
+
         <View
           style={{
             width: "60%",
@@ -246,7 +254,7 @@ export default function Home() {
           >
             <Pressable onPress={() => setVerM(true)}>
               <Image
-                source={require('../../../assets/Icones/menu-aberto.png')}
+                source={require("../../../assets/Icones/menu-aberto.png")}
                 style={{ width: "70%", height: "100%" }}
                 resizeMode="contain"
               />
@@ -273,9 +281,9 @@ export default function Home() {
                 }}
               >
                 {item.img && (
-                  <Image 
-                    style={[{ borderWidth: 1, width: "100%", height: "100%" }]} 
-                    resizeMode="contain" 
+                  <Image
+                    style={[{ width: "100%", height: "100%" }]}
+                    resizeMode="contain"
                     source={item.img}
                   />
                 )}
@@ -287,40 +295,104 @@ export default function Home() {
       </View>
 
       <Modal visible={verM} transparent={true}>
-        <BlurView intensity={70} tint="dark" style={{ width: '100%', height: '100%' }}>
+      <Pressable style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}} 
+                onPress={() => {
+                  setAnimacao('fadeOutRight');
+                  setTimeout(() => {
+                    setVerM(false);
+                    setAnimacao('fadeInRight');
+                  }, 300);
+                }}>
+               
+                
+               
+        <BlurView
+          intensity={40}
+          tint="dark"
+          style={{ width: "100%", height: "100%" }}
+        >
           <View style={styles.container2}>
-            <View style={{ 
-              flex: 0.5, 
-              width: '80%', 
-              backgroundColor: '#fffafbff', 
-              borderRadius: width * 0.07, 
-              borderWidth: 1, 
-              justifyContent: 'center', 
-              alignItems: 'center' 
-            }}>
-              <Pressable onPress={() => setVerM(false)}>
-                <Text>sair</Text>
-              </Pressable>
-              <View style={{
-                flex: 0.8, 
-                width: '100%', 
-                borderWidth: 1, 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
-                flexDirection: 'column'
-              }}>
-                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
-                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
-                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
-                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
-                <View style={{ width: '100%', height: '20%', borderWidth: 1 }}><Text>a</Text></View>
+            <Animatable.View animation={animacao}
+              style={{
+                flex: 1,
+                width: "20%",
+                backgroundColor: "#fffafbff",
+                justifyContent: "center",
+                alignItems: "center",
+                borderBottomLeftRadius:'1%',
+                borderTopLeftRadius:'1%',
+              }}
+            >
+              <View
+                style={{
+                  flex: 0.91,
+                  width: "100%",           
+                }}
+              >
+                
+                <View style={styles.itensModal}>
+                 
+                 
+                  <Image
+                    source={require("../../../assets/Icones/user-shape.png")}
+                    style={styles.tamanhoIcone}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.itensModal}>
+                 
+                  
+                  <Image
+                    source={require("../../../assets/Icones/suport.png")}
+                    style={styles.tamanhoIcone}
+                    resizeMode="contain"
+                  />
+                </View>
+                <View style={styles.itensModal}>
+                  
+                  
+                  <Image
+                    source={require("../../../assets/Icones/termo.png")}
+                    style={styles.tamanhoIcone}
+                    resizeMode="contain"
+                  />
+                </View>
+                
+                <View style={styles.itensModal}>
+                 
+                  <Image
+                    source={require("../../../assets/Icones/settings-cogwheel-button.png")}
+                    style={styles.tamanhoIcone}
+                    resizeMode="contain"
+                  />
+                  
+                </View>
+                <View style={styles.itensModal}>
+                 <Pressable style={{width:'100%',alignItems:'center'}} onPress={() => {
+                  setAnimacao('fadeOutRight');
+                  setTimeout(() => {
+                    setVerM(false);
+                  logout()
+                  }, 300);
+                }}>
+                 <Image
+                   source={require("../../../assets/Icones/logout.png")}
+                   style={styles.tamanhoIcone}
+                   resizeMode="contain"
+                 />
+                 </Pressable>
+               </View>
+                
               </View>
-            </View>
+              
+            </Animatable.View>
+            
           </View>
         </BlurView>
+        </Pressable>
       </Modal>
 
-      <StatusBar style="auto" hidden={true} />
+      <StatusBar style="auto" />
     </View>
   );
 }

@@ -15,8 +15,8 @@ export default StyleSheet.create({
     container2: {
       flex: 1,
       
-
-      alignItems: 'center',
+      
+      alignItems: 'flex-end',
       justifyContent: 'center',
       gap:10 ,
      
@@ -45,7 +45,21 @@ export default StyleSheet.create({
     width: "90%",
     
     
+  },itensModal:{ 
+    width: '100%', 
+    height: '20%', 
+  
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center'
   },
+  tamanhoIcone:{ 
+    width: "55%", 
+    height: "60%" 
+
+  },
+
 
   flatlist: {
     width: "100%",
