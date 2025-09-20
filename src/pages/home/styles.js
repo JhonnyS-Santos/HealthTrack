@@ -19,7 +19,7 @@ export default StyleSheet.create({
       alignItems: 'flex-end',
       justifyContent: 'center',
       gap:10 ,
-     
+      
     },
     navbar:{ 
 
@@ -100,6 +100,103 @@ export default StyleSheet.create({
     width:'90%',
     height:'90%',
     borderRadius:5
-  }
+  }, 
+  container3: {
+      flex: 1,
+     
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignItems:'center',
+      display:'flex', 
+      flexDirection:'column',
+      width:'100%'
+     
+    },
+    perfil:{ 
+        flex:0.5,
+        borderWidth:1,
+        width:'85%', 
+        borderRadius:20, 
+        justifyContent:'center', 
+        alignItems:'center', 
+        display:'flex', 
+        backgroundColor:'#339989ff',
+        flexDirection:'column'
+    }, 
+    itensPerfil:{
+       
+        flex:0.5,
+        width:'100%', 
+        justifyContent:'center', 
+        alignItems:'center', 
+        display:'flex', 
+        flexDirection:'column',
+        gap:5,
+        
+    },itensPerfil2:{
+       
+        flex:0.2,
+        width:'100%', 
+        justifyContent:'center', 
+        alignItems:'center', 
+        display:'flex', 
+        flexDirection:'column',
+        
+        gap:20
+       
+    },
+    itensPerfil3:{
+       
+        flex:0.4,
+        width:'100%', 
+        justifyContent:'center', 
+        alignItems:'center', 
+        display:'flex', 
+        flexDirection:'column',
+
+       
+    },
+    fotoPerfil:{ 
+        borderWidth:1, 
+        flex:0.9,
+        width:'44%', 
+        borderRadius:'50%',
+        
+    }, 
+    nome:{ 
+        color:'#fffafbff', 
+        fontSize:22,
+        width:'100%', 
+        textAlign:'center',
+    }, 
+    itens2:{
+        width:'100%', 
+        borderTopWidth:1, 
+    }, 
+    texto:{
+          color:'#fffafbff', 
+          fontSize:20
+    },
+      botao: {
+    backgroundColor: "#c70202ff",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#131515",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  botaoPressionado: {
+    backgroundColor: "#7de2d1", 
+  },
+  texto2: {
+    color: "#fffafb", 
+    fontSize: 15,
+    fontWeight: "600",
+  },
   
   });

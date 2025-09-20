@@ -10,18 +10,23 @@ import Etapa5 from "./src/pages/registro/Etapa 5";
 import Login from "./src/pages/login";
 import Splash from "./src/pages/splash";
 import Home from "./src/pages/home";
-import Perfil from "./src/pages/perfil";
+import Caloria from "./src/pages/caloria";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="caloria">
         <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
           component={Home}
+        />
+          <Stack.Screen
+          options={{ headerShown: false }}
+          name="caloria"
+          component={Caloria}
         />
         
         <Stack.Screen

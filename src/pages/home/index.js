@@ -93,6 +93,7 @@ export default function Home() {
   const width = Dimensions.get("screen").width;
   const height = Dimensions.get("screen").height;
   const [verM, setVerM] = useState(false);
+    const [verM2, setVerM2] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [animacao,setAnimacao]=useState('fadeInRight')
 
@@ -332,12 +333,23 @@ export default function Home() {
                 
                 <View style={styles.itensModal}>
                  
-                 
+                  <Pressable style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}} 
+                onPress={() => {
+                  setAnimacao('fadeOutRight');
+                  setTimeout(() => {
+                    setVerM(false);
+                    setVerM2(true);
+                     setAnimacao('fadeInRight');
+                    
+                  }, 300);
+                }}>
                   <Image
                     source={require("../../../assets/Icones/user-shape.png")}
                     style={styles.tamanhoIcone}
                     resizeMode="contain"
                   />
+                  </Pressable>
+                  
                 </View>
                 <View style={styles.itensModal}>
                  
@@ -390,6 +402,41 @@ export default function Home() {
           </View>
         </BlurView>
         </Pressable>
+      </Modal>
+       <Modal visible={verM2} transparent={true}>
+        <BlurView
+          intensity={40}
+          tint="dark"
+          style={{ width: "100%", height: "100%" }}
+        >
+           <Pressable style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}} 
+                onPress={() => { 
+                    setVerM2(false);
+                }}>
+          <View style={styles.container3}>
+              <View style={styles.perfil} >
+                  <View style={styles.itensPerfil}>
+                       <View style={styles.fotoPerfil}></View>
+                       <Text style={styles.nome}>Nome</Text>
+                  </View>
+                    <View style={styles.itensPerfil2}>
+                       <View style={styles.itens2}><Text style={styles.texto}>Editar Perfil</Text></View>
+                        <View style={styles.itens2}><Text style={styles.texto}>Notificações</Text></View>
+                    </View>
+                      <View style={styles.itensPerfil3}>
+                    <Pressable style={({ pressed }) => [
+                        styles.botao,
+                          pressed && styles.botaoPressionado
+                       ]}>
+                       <Text style={styles.texto2}>Excluir Perfil</Text>
+                  </Pressable>
+          
+                  </View>
+              </View>
+             </View>
+             </Pressable>
+             </BlurView>
+             
       </Modal>
 
       <StatusBar style="auto" />
