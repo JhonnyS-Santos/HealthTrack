@@ -1,43 +1,250 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
-  container2: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
-    backgroundColor: "#fffafbff", 
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-   
+    backgroundColor: '#fffafb', 
+    
   },
   searchBox: {
-    width: "100%",
-    alignItems: "center",
+    flexDirection: 'row',
+    padding: 15,
+    backgroundColor: '#339989', 
+    alignItems: 'center',
   },
+  searchContainer: {
+  backgroundColor: '#339989', 
+},
   input: {
-    width: "100%",
-    backgroundColor: "#fffafbff", 
-    color: " #131515ff", 
-    padding: 12,
+    flex: 1,
+    height: 50,
+    backgroundColor: 'rgba(51, 49, 49, 0.2)',
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#7de2d1", 
+    paddingHorizontal: 15,
+    color: '#fffafb', 
+    marginRight: 10,
     fontSize: 16,
-    marginBottom: 15,
   },
   botao: {
-    backgroundColor: "#339989", 
-    paddingVertical: 12,
+    backgroundColor: '#7de2d1', 
     paddingHorizontal: 20,
+    paddingVertical: 15,
     borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
   },
   botaoPressionado: {
-    backgroundColor: "#7de2d1", // tiffany blue
+    opacity: 0.8,
+    backgroundColor: '#6bc9b9', 
   },
   textoBotao: {
-    color: "#fffafb", // snow
+    color: '#2b2c28', 
+    fontWeight: 'bold',
     fontSize: 16,
-    fontWeight: "600",
+  },
+  productItem: {
+    flexDirection: 'row',
+    padding: 15,
+    backgroundColor: '#fffafb',
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  productImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+    marginRight: 15,
+    backgroundColor: '#f0f0f0',
+  },
+  placeholderImage: {
+    backgroundColor: '#e0e0e0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    color: '#9e9e9e',
+    fontSize: 12,
+  },
+  productInfo: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  productName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2b2c28',
+    marginBottom: 4,
+  },
+  brandName: {
+    fontSize: 14,
+    color: '#666666',
+    marginBottom: 4,
+  },
+  calories: {
+    fontSize: 14,
+    color: '#e74c3c',
+    fontWeight: '600',
+  },
+  serving: {
+    fontSize: 12,
+    color: '#888888',
+    marginTop: 2,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#eeeeee',
+    marginHorizontal: 15,
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#fffafb', 
+  },
+  loadingText: {
+    marginTop: 10,
+    color: '#339989', 
+    fontSize: 16,
+  },
+  errorText: {
+    color: '#e74c3c',
+    textAlign: 'center',
+    marginBottom: 15,
+    fontSize: 16,
+  },
+  emptyText: {
+    color: '#666666',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  emptyListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fffafb', 
+  },
+  retryButton: {
+    backgroundColor: '#7de2d1', 
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 15,
+  },
+  retryButtonText: {
+    color: '#2b2c28',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  },
+  modalContent: {
+    backgroundColor: '#fffafb',
+    borderRadius: 20,
+    padding: 20,
+    width: '90%',
+    maxHeight: '85%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+    paddingBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#7de2d1', 
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#339989',
+    flex: 1,
+    marginRight: 10,
+  },
+  closeButton: {
+    backgroundColor: '#2c2a2aff',
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  modalImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    marginBottom: 15,
+    backgroundColor: '#f0f0f0',
+  },
+  modalLoading: {
+    padding: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalLoadingText: {
+    marginTop: 10,
+    color: '#339989', 
+    fontSize: 16,
+  },
+  detailsSection: {
+    marginBottom: 20,
+    backgroundColor: 'rgba(125, 226, 209, 0.1)', 
+    borderRadius: 12,
+    padding: 15,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#339989', 
+    marginBottom: 12,
+    paddingBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#7de2d1', 
+  },
+  detailRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    paddingHorizontal: 5,
+  },
+  detailLabel: {
+    fontSize: 16,
+    color: '#666666',
+    fontWeight: '500',
+  },
+  detailValue: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#2b2c28',
+  },
+  caloriesValue: {
+    color: '#e74c3c',
+    fontWeight: 'bold',
   },
 });
+
+export default styles;
