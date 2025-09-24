@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/login', [UserController::class, 'login']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::post('/users/{id}/photo', [UserController::class, 'updatePhoto']);
 
 Route::get('/test', function () {
     return response()->json([

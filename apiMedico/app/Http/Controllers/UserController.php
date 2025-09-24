@@ -107,16 +107,113 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, userModel $userModel)
-    {
-        //
-    }
+    public function updatePhoto(Request $request, $id)
+{
+    try {
+        // Validação mais simples para teste
+        $validatedData = $request->validate([
+            'fotoUsers' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Aumentei para 5MB
+        ]);
 
+        // Encontrar o usuário pelo ID
+        $user = userModel::find($id);
+        
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Usuário não encontrado'
+            ], 404);
+        }
+
+        // Verificar se há uma nova foto no request
+        if ($request->hasFile('fotoUsers')) {
+            $file = $request->file('fotoUsers');
+            
+            // Log para debug
+            
+
+            // Validar o arquivo
+            if (!$file->isValid()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Arquivo de imagem inválido'
+                ], 400);
+            }
+
+            // Deletar a foto anterior se existir
+            if ($user->fotoUsers && file_exists(public_path($user->fotoUsers))) {
+                unlink(public_path($user->fotoUsers));
+            }
+
+            // Salvar a nova foto
+            $path = $file->store('users', 'public');
+            $user->fotoUsers = '/storage/' . $path;
+            
+            // Salvar as alterações no banco
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto atualizada com sucesso',
+                'fotoUrl' => $user->fotoUsers,
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nenhuma imagem enviada'
+            ], 400);
+        }
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+       
+        return response()->json([
+            'success' => false,
+            'message' => 'Erro de validação',
+            'errors' => $e->errors()
+        ], 422);
+        
+    } catch (\Exception $e) {
+       
+        return response()->json([
+            'success' => false,
+            'message' => 'Erro ao atualizar foto',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(userModel $userModel)
-    {
-        //
+   /**
+ * Remove the specified resource from storage.
+ */
+public function destroy(string $id)
+{
+    try {
+        // Verifique se o ID é válido
+        if (!is_numeric($id) || $id <= 0) {
+            return response()->json(['error' => 'ID inválido'], 400);
+        }
+
+        $user = UserModel::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuário não encontrado'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Usuário deletado com sucesso',
+            'id' => $id
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Erro interno do servidor',
+            'message' => $e->getMessage()
+        ], 500);
     }
+}
 }
