@@ -4,59 +4,59 @@ const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 
 export default StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fffafbff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap:10 ,
-     
-    },
-    container2: {
-      flex: 1,
-      
-      
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-      gap:10 ,
-      
-    },
-    navbar:{ 
+  container: {
+    flex: 1,
+    backgroundColor: '#fffafbff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
 
-      
-      width:'100%',
-      flex:0.2
-      , top:'-10%',
-      justifyContent:'center', 
-      alignItems:'center', 
-      display:'flex', 
-      flexDirection:'row',
-      gap:10, 
-      paddingTop:'13%', 
-      borderRadius:'5%',
-      padding:'2%'
-      ,backgroundColor:'#7de2d1ff'
+  },
+  container2: {
+    flex: 1,
 
-    }, 
-    
 
-    numerosAd: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    gap: 10,
+
+  },
+  navbar: {
+
+
+    width: '100%',
+    flex: 0.2
+    , top: '-10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+    paddingTop: '13%',
+    borderRadius: '5%',
+    padding: '2%'
+    , backgroundColor: '#7de2d1ff'
+
+  },
+
+
+  numerosAd: {
     flex: 0.7,
     width: "90%",
-    
-    
-  },itensModal:{ 
-    width: '100%', 
-    height: '20%', 
-  
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center'
+
+
+  }, itensModal: {
+    width: '100%',
+    height: '20%',
+
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  tamanhoIcone:{ 
-    width: "55%", 
-    height: "60%" 
+  tamanhoIcone: {
+    width: "55%",
+    height: "60%"
 
   },
 
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     padding: "8%",
     paddingBottom: "140%",
     marginBottom: "130%",
-    
+
   },
 
   bera: {
@@ -75,7 +75,7 @@ export default StyleSheet.create({
     aspectRatio: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom:'9%',
+    marginBottom: '9%',
     marginHorizontal: 4,
     marginVertical: 5,
   },
@@ -94,90 +94,90 @@ export default StyleSheet.create({
     textAlignVertical: "center",
     textAlign: "center",
     includeFontPadding: false,
-  }, 
-  botoes:{ 
-    borderWidth:1,
-    width:'90%',
-    height:'90%',
-    borderRadius:5
-  }, 
+  },
+  botoes: {
+    borderWidth: 1,
+    width: '90%',
+    height: '90%',
+    borderRadius: 5
+  },
   container3: {
-      flex: 1,
-     
-      alignItems: 'center',
-      justifyContent: 'center',
-      alignItems:'center',
-      display:'flex', 
-      flexDirection:'column',
-      width:'100%'
-     
-    },
-    perfil:{ 
-        flex:0.5,
-        borderWidth:1,
-        width:'85%', 
-        borderRadius:20, 
-        justifyContent:'center', 
-        alignItems:'center', 
-        display:'flex', 
-        backgroundColor:'#339989ff',
-        flexDirection:'column'
-    }, 
-    itensPerfil:{
-       
-        flex:0.5,
-        width:'100%', 
-        justifyContent:'center', 
-        alignItems:'center', 
-        display:'flex', 
-        flexDirection:'column',
-        gap:5,
-        
-    },itensPerfil2:{
-       
-        flex:0.2,
-        width:'100%', 
-        justifyContent:'center', 
-        alignItems:'center', 
-        display:'flex', 
-        flexDirection:'column',
-        
-        gap:20
-       
-    },
-    itensPerfil3:{
-       
-        flex:0.4,
-        width:'100%', 
-        justifyContent:'center', 
-        alignItems:'center', 
-        display:'flex', 
-        flexDirection:'column',
+    flex: 1,
 
-       
-    },
-    fotoPerfil:{ 
-        borderWidth:1, 
-        flex:0.9,
-        width:'44%', 
-        borderRadius:'50%',
-        
-    }, 
-    nome:{ 
-        color:'#fffafbff', 
-        fontSize:22,
-        width:'100%', 
-        textAlign:'center',
-    }, 
-    itens2:{
-        width:'100%', 
-        borderTopWidth:1, 
-    }, 
-    texto:{
-          color:'#fffafbff', 
-          fontSize:20
-    },
-      botao: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%'
+
+  },
+  perfil: {
+    flex: 0.5,
+    borderWidth: 1,
+    width: '85%',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    backgroundColor: '#339989ff',
+    flexDirection: 'column'
+  },
+  itensPerfil: {
+
+    flex: 0.5,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 5,
+
+  }, itensPerfil2: {
+
+    flex: 0.2,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+
+    gap: 20
+
+  },
+  itensPerfil3: {
+
+    flex: 0.4,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+
+
+  },
+  fotoPerfil: {
+    borderWidth: 1,
+    flex: 0.9,
+    width: '44%',
+    borderRadius: '50%',
+
+  },
+  nome: {
+    color: '#fffafbff',
+    fontSize: 22,
+    width: '100%',
+    textAlign: 'center',
+  },
+  itens2: {
+    width: '100%',
+    borderTopWidth: 1,
+  },
+  texto: {
+    color: '#fffafbff',
+    fontSize: 20
+  },
+  botao: {
     backgroundColor: "#c70202ff",
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -191,12 +191,12 @@ export default StyleSheet.create({
     elevation: 5,
   },
   botaoPressionado: {
-    backgroundColor: "#7de2d1", 
+    backgroundColor: "#7de2d1",
   },
   texto2: {
-    color: "#fffafb", 
+    color: "#fffafb",
     fontSize: 15,
     fontWeight: "600",
   },
-  
-  });
+
+});

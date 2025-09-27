@@ -9,7 +9,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Etapa3() {
     const route = useRoute();
-    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '', logP = '' } = route.params || {};
+    const { nomeP = '', emailP = '', dataN = '', estadoP = '', cepP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '', logP = '', pesoP = '', alturaP = '', tipoSP = '' } = route.params || {};
     const [isFocused, setIsFocused] = useState(false);
     const [isFocusedA, setIsFocusedA] = useState(false);
     const [logradouro, setLogradouro] = useState(logP || '');
@@ -31,7 +31,7 @@ export default function Etapa3() {
         if (logradouro === '' || numero === '') {
             Alert.alert('Atenção', 'Por favor, preencha todos os campos.');
         } else {
-            navigation.navigate('Etapa4', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP: numero, photoUriP, senhaP, senhaCP, logP: logradouro });
+            navigation.navigate('Etapa4', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP: numero, photoUriP, senhaP, senhaCP, logP: logradouro, pesoP, alturaP, tipoSP  } );
         }
     }
 
@@ -100,7 +100,7 @@ export default function Etapa3() {
                         <View style={[styles.inputC, { flexDirection: 'column' }]}>
                             <View style={[styles.bots, { flexDirection: 'row' }]}>
                                 <Pressable
-                                    onPress={() => navigation.navigate('Etapa2', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP: numero, photoUriP, senhaP, senhaCP })}
+                                    onPress={() => navigation.navigate('Etapa2', { nomeP, emailP, dataN, estadoP, cepP, bairroP, numP: numero, photoUriP, senhaP, senhaCP, pesoP, alturaP, tipoSP })}
                                     style={[styles.proximo1, { backgroundColor: '#339989ff' }]}
                                 >
                                     <Text style={styles.textoP}>Voltar</Text>

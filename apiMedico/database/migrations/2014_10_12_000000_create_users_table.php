@@ -23,7 +23,9 @@ return new class extends Migration
             $table->string('numUsers')->nullable();
             $table->string('fotoUsers')->nullable();
             $table->string('senhaUsers');
-
+            $table->string('tipoSUsers')->nullable();
+            $table->string('alturaUsers')->nullable();
+            $table->string('pesoUsers')->nullable();
         });
     }
 

@@ -65,6 +65,9 @@ class UserController extends Controller
             $user->cepUsers    = (int) $request->cepUsers;
             $user->bairroUsers = $request->bairroUsers;
             $user->ruaUsers    = $request->ruaUsers;
+            $user->tipoSUsers  = $request->tipoSUsers;
+            $user->alturaUsers = $request->alturaUsers;
+            $user->pesoUsers   = $request->pesoUsers;
             $user->numUsers    = (int) $request->numUsers;
             $user->senhaUsers  = Hash::make($request->senhaUsers);
 
@@ -117,7 +120,7 @@ class UserController extends Controller
 
         // Encontrar o usuário pelo ID
         $user = userModel::find($id);
-        
+
         if (!$user) {
             return response()->json([
                 'success' => false,
@@ -128,9 +131,9 @@ class UserController extends Controller
         // Verificar se há uma nova foto no request
         if ($request->hasFile('fotoUsers')) {
             $file = $request->file('fotoUsers');
-            
+
             // Log para debug
-            
+
 
             // Validar o arquivo
             if (!$file->isValid()) {
@@ -148,7 +151,7 @@ class UserController extends Controller
             // Salvar a nova foto
             $path = $file->store('users', 'public');
             $user->fotoUsers = '/storage/' . $path;
-            
+
             // Salvar as alterações no banco
             $user->save();
 
@@ -166,15 +169,15 @@ class UserController extends Controller
         }
 
     } catch (\Illuminate\Validation\ValidationException $e) {
-       
+
         return response()->json([
             'success' => false,
             'message' => 'Erro de validação',
             'errors' => $e->errors()
         ], 422);
-        
+
     } catch (\Exception $e) {
-       
+
         return response()->json([
             'success' => false,
             'message' => 'Erro ao atualizar foto',

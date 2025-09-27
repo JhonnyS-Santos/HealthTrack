@@ -7,6 +7,7 @@ import Etapa2 from "./src/pages/registro/Etapa 2";
 import Etapa3 from "./src/pages/registro/Etapa 3";
 import Etapa4 from "./src/pages/registro/Etapa 4";
 import Etapa5 from "./src/pages/registro/Etapa 5";
+import Etapa6 from "./src/pages/registro/Etapa 6";
 import Login from "./src/pages/login";
 import Splash from "./src/pages/splash";
 import Home from "./src/pages/home";
@@ -17,7 +18,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="caloria">
+      <Stack.Navigator initialRouteName="Etapa4">
         <Stack.Screen
           options={{ headerShown: false }}
           name="Home"
@@ -35,6 +36,11 @@ export default function App() {
           component={Login}
         />
 
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Etapa6"
+          component={Etapa6}
+        />
         <Stack.Screen
           options={{ headerShown: false }}
           name="Etapa5"

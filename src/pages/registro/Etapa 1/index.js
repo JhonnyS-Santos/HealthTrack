@@ -10,7 +10,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function Etapa1() {
   const route = useRoute();
-  const { nomeP = '', emailP = '', dataN = 'Data de Nascimento', cepP = '', estadoP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '' } = route.params || {};
+  const { nomeP = '', emailP = '', dataN = 'Data de Nascimento', cepP = '', estadoP = '', bairroP = '', numP = '', photoUriP = '', senhaP = '', senhaCP = '', pesoP= '', alturaP='', tipoSP='' } = route.params || {};
   const [isFocused, setIsFocused] = useState(false);
   const [isFocusedA, setIsFocusedA] = useState(false);
   const [mostrar, setMostrar] = useState(false);
@@ -66,7 +66,7 @@ export default function Etapa1() {
     if (nome === '' || email === '' || valor === 'Data de Nascimento') {
       Alert.alert("Atenção", "Por favor, preencha todos os campos.");
     } else {
-      navigation.navigate('Etapa2', { nomeP: nome, emailP: emailLower, dataN: valor, cepP, estadoP, bairroP, numP, photoUriP, senhaP, senhaCP })
+      navigation.navigate('Etapa2', { nomeP: nome, emailP: emailLower, dataN: valor, cepP, estadoP, bairroP, numP, photoUriP, senhaP, senhaCP, pesoP, alturaP, tipoSP  } );
     }
   };
 

@@ -242,5 +242,16 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'contain'
+  },
+
+  modal1: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    padding: 20,
+    borderRadius: 10,
   }
 });

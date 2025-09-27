@@ -12,6 +12,6 @@ class userModel extends Model
     protected $table = 'users';
     public $timestamps = false;
 
-    public $fillable = ['nomeUsers', 'emailUsers', 'dataNUsers', 'estadoUsers', 'cepUsers', 'bairroUsers', 'ruaUsers','numUsers', 'fotoUsers', 'senhaUsers'];
+    public $fillable = ['nomeUsers', 'emailUsers', 'dataNUsers', 'estadoUsers', 'cepUsers', 'bairroUsers', 'ruaUsers','numUsers', 'fotoUsers', 'tipoSUsers','alturaUsers','pesoUsers','senhaUsers'];
 
 }

@@ -3,40 +3,40 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fffafb', 
-    
+    backgroundColor: '#fffafb',
+
   },
   searchBox: {
     flexDirection: 'row',
     padding: 15,
-    backgroundColor: '#339989', 
+    backgroundColor: '#339989',
     alignItems: 'center',
   },
   searchContainer: {
-  backgroundColor: '#339989', 
-},
+    backgroundColor: '#339989',
+  },
   input: {
     flex: 1,
     height: 50,
     backgroundColor: 'rgba(51, 49, 49, 0.2)',
     borderRadius: 10,
     paddingHorizontal: 15,
-    color: '#fffafb', 
+    color: '#fffafb',
     marginRight: 10,
     fontSize: 16,
   },
   botao: {
-    backgroundColor: '#7de2d1', 
+    backgroundColor: '#7de2d1',
     paddingHorizontal: 20,
     paddingVertical: 15,
     borderRadius: 10,
   },
   botaoPressionado: {
     opacity: 0.8,
-    backgroundColor: '#6bc9b9', 
+    backgroundColor: '#6bc9b9',
   },
   textoBotao: {
-    color: '#2b2c28', 
+    color: '#2b2c28',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -107,11 +107,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fffafb', 
+    backgroundColor: '#fffafb',
   },
   loadingText: {
     marginTop: 10,
-    color: '#339989', 
+    color: '#339989',
     fontSize: 16,
   },
   errorText: {
@@ -129,10 +129,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fffafb', 
+    backgroundColor: '#fffafb',
   },
   retryButton: {
-    backgroundColor: '#7de2d1', 
+    backgroundColor: '#7de2d1',
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 8,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-   
+
   },
   modalContent: {
     backgroundColor: '#fffafb',
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: '#7de2d1', 
+    borderBottomColor: '#7de2d1',
   },
   modalTitle: {
     fontSize: 20,
@@ -207,23 +207,23 @@ const styles = StyleSheet.create({
   },
   modalLoadingText: {
     marginTop: 10,
-    color: '#339989', 
+    color: '#339989',
     fontSize: 16,
   },
   detailsSection: {
     marginBottom: 20,
-    backgroundColor: 'rgba(125, 226, 209, 0.1)', 
+    backgroundColor: 'rgba(125, 226, 209, 0.1)',
     borderRadius: 12,
     padding: 15,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#339989', 
+    color: '#339989',
     marginBottom: 12,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: '#7de2d1', 
+    borderBottomColor: '#7de2d1',
   },
   detailRow: {
     flexDirection: 'row',
