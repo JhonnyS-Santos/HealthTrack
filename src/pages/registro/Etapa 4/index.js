@@ -68,9 +68,7 @@ export default function Etapa4() {
     setAltura(numericAlt);
   };
 
-  useEffect(() => {
 
-  }, []);
 
   return (
     <KeyboardAvoidingView

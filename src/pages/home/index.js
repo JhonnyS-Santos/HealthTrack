@@ -294,114 +294,141 @@ export default function Home() {
         />
       </View>
 
-      <Modal visible={verM} transparent={true}>
-        <Pressable style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
-          onPress={() => {
-            setAnimacao('fadeOutRight');
-            setTimeout(() => {
-              setVerM(false);
-              setAnimacao('fadeInRight');
-            }, 300);
-          }}>
+  <Modal visible={verM} transparent={true} statusBarTranslucent={true}>
+  <Pressable 
+    style={styles.modalOverlay}
+    onPress={() => {
+      setAnimacao('fadeOutRight');
+      setTimeout(() => {
+        setVerM(false);
+        setAnimacao('fadeInRight');
+      }, 500);
+    }}
+  >
+    <BlurView intensity={90} tint="dark" style={styles.blurContainer}>
+      <View style={styles.container2}>
+        <Animatable.View 
+          animation={animacao}
+          style={styles.sidebar}
+        >
+          {/* Header do Sidebar */}
+          <View style={styles.sidebarHeader}>
+            <Text style={styles.sidebarTitle}>Menu</Text>
+            <View style={styles.headerLine} />
+          </View>
 
-
-
-          <BlurView
-            intensity={40}
-            tint="dark"
-            style={{ width: "100%", height: "100%" }}
-          >
-            <View style={styles.container2}>
-              <Animatable.View animation={animacao}
-                style={{
-                  flex: 1,
-                  width: "20%",
-                  backgroundColor: "#fffafbff",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderBottomLeftRadius: '1%',
-                  borderTopLeftRadius: '1%',
-                }}
-              >
-                <View
-                  style={{
-                    flex: 0.91,
-                    width: "100%",
-                  }}
-                >
-
-                  <View style={styles.itensModal}>
-
-                    <Pressable style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
-                      onPress={() => {
-                        setAnimacao('fadeOutRight');
-                        setTimeout(() => {
-                          setVerM(false);
-                          setVerM2(true);
-                          setAnimacao('fadeInRight');
-
-                        }, 300);
-                      }}>
-                      <Image
-                        source={require("../../../assets/Icones/user-shape.png")}
-                        style={styles.tamanhoIcone}
-                        resizeMode="contain"
-                      />
-                    </Pressable>
-
-                  </View>
-                  <View style={styles.itensModal}>
-
-
-                    <Image
-                      source={require("../../../assets/Icones/suport.png")}
-                      style={styles.tamanhoIcone}
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <View style={styles.itensModal}>
-
-
-                    <Image
-                      source={require("../../../assets/Icones/termo.png")}
-                      style={styles.tamanhoIcone}
-                      resizeMode="contain"
-                    />
-                  </View>
-
-                  <View style={styles.itensModal}>
-
-                    <Image
-                      source={require("../../../assets/Icones/settings-cogwheel-button.png")}
-                      style={styles.tamanhoIcone}
-                      resizeMode="contain"
-                    />
-
-                  </View>
-                  <View style={styles.itensModal}>
-                    <Pressable style={{ width: '100%', alignItems: 'center' }} onPress={() => {
-                      setAnimacao('fadeOutRight');
-                      setTimeout(() => {
-                        setVerM(false);
-                        logout()
-                      }, 300);
-                    }}>
-                      <Image
-                        source={require("../../../assets/Icones/logout.png")}
-                        style={styles.tamanhoIcone}
-                        resizeMode="contain"
-                      />
-                    </Pressable>
-                  </View>
-
+          {/* Itens do Menu */}
+          <View style={styles.menuItems}>
+            {/* Perfil */}
+            <Pressable 
+              style={({pressed}) => [styles.menuItem, pressed && styles.menuItemPressed]}
+              onPress={() => {
+                setAnimacao('fadeOutRight');
+                setTimeout(() => {
+                  setVerM(false);
+                  setVerM2(true);
+                  setAnimacao('fadeInRight');
+                }, 300);
+              }}
+            >
+              <View style={styles.menuItemContent}>
+                <View style={[styles.iconContainer, styles.profileIcon]}>
+                  <Image
+                    source={require("../../../assets/Icones/user-shape.png")}
+                    style={styles.menuIcon}
+                    resizeMode="contain"
+                  />
                 </View>
+                <Text style={styles.menuText}>Perfil</Text>
+              </View>
+              <Text style={styles.menuArrow}>›</Text>
+            </Pressable>
 
-              </Animatable.View>
+            {/* Suporte */}
+            <Pressable 
+              style={({pressed}) => [styles.menuItem, pressed && styles.menuItemPressed]}
+            >
+              <View style={styles.menuItemContent}>
+                <View style={[styles.iconContainer, styles.supportIcon]}>
+                  <Image
+                    source={require("../../../assets/Icones/suport.png")}
+                    style={styles.menuIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+                <Text style={styles.menuText}>Suporte</Text>
+              </View>
+              <Text style={styles.menuArrow}>›</Text>
+            </Pressable>
 
-            </View>
-          </BlurView>
-        </Pressable>
-      </Modal>
+            {/* Termos */}
+            <Pressable 
+              style={({pressed}) => [styles.menuItem, pressed && styles.menuItemPressed]}
+            >
+              <View style={styles.menuItemContent}>
+                <View style={[styles.iconContainer, styles.termsIcon]}>
+                  <Image
+                    source={require("../../../assets/Icones/termo.png")}
+                    style={styles.menuIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+                <Text style={styles.menuText}>Termos</Text>
+              </View>
+              <Text style={styles.menuArrow}>›</Text>
+            </Pressable>
+
+            {/* Configurações */}
+            <Pressable 
+              style={({pressed}) => [styles.menuItem, pressed && styles.menuItemPressed]}
+            >
+              <View style={styles.menuItemContent}>
+                <View style={[styles.iconContainer, styles.settingsIcon]}>
+                  <Image
+                    source={require("../../../assets/Icones/settings-cogwheel-button.png")}
+                    style={styles.menuIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+                <Text style={styles.menuText}>Configurações</Text>
+              </View>
+              <Text style={styles.menuArrow}>›</Text>
+            </Pressable>
+
+            {/* Logout */}
+            <Pressable 
+              style={({pressed}) => [styles.menuItem, pressed && styles.menuItemPressed]}
+              onPress={() => {
+                setAnimacao('fadeOutRight');
+                setTimeout(() => {
+                  setVerM(false);
+                  logout();
+                }, 300);
+              }}
+            >
+              <View style={styles.menuItemContent}>
+                <View style={[styles.iconContainer, styles.logoutIcon]}>
+                  <Image
+                    source={require("../../../assets/Icones/logout.png")}
+                    style={styles.menuIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+                <Text style={[styles.menuText, styles.logoutText]}>Sair</Text>
+              </View>
+              <Text style={styles.menuArrow}>›</Text>
+            </Pressable>
+          </View>
+
+          {/* Footer do Sidebar */}
+          <View style={styles.sidebarFooter}>
+            <Text style={styles.footerText}>Versão 1.0.0</Text>
+          </View>
+        </Animatable.View>
+      </View>
+    </BlurView>
+  </Pressable>
+</Modal>
       <Modal visible={verM2} transparent={true}>
         <BlurView
           intensity={40}
@@ -416,7 +443,7 @@ export default function Home() {
               <View style={styles.perfil} >
                 <View style={styles.itensPerfil}>
                   <View style={styles.fotoPerfil}></View>
-                  <Text style={styles.nome}>Nome</Text>
+                  <Text style={styles.nome}>{user.nomeUsers}</Text>
                 </View>
                 <View style={styles.itensPerfil2}>
                   <View style={styles.itens2}><Text style={styles.texto}>Editar Perfil</Text></View>
@@ -437,6 +464,107 @@ export default function Home() {
         </BlurView>
 
       </Modal>
+    <Modal 
+  visible={verM2} 
+  transparent={true} 
+  animationType="slide"
+  statusBarTranslucent={true}
+>
+  <View style={styles.modalOverlay}>
+    <BlurView
+      intensity={80}
+      tint="dark"
+      style={styles.blurContainer}
+    >
+      <Pressable 
+        style={styles.modalBackground}
+        onPress={() => setVerM2(false)}
+      >
+        <View style={styles.modalContent}>
+          {/* Container principal do perfil */}
+          <View style={styles.perfilCard}>
+            
+            {/* Cabeçalho do perfil */}
+            <View style={styles.profileHeader}>
+              <View style={styles.avatarContainer}>
+                <View style={styles.avatar}>
+                  
+                       <ImageWithLoader
+            source={
+              user?.fotoUsers && !imageError
+                ? {
+                  uri: `${api.defaults.baseURL.replace("/api", "")}${user.fotoUsers
+                    }`,
+                  headers: { "Cache-Control": "no-cache" },
+                }
+                : require("../../../assets/Icones/UserRed.png")
+            }
+            style={{
+              width: '100%',
+              height: '100%',
+             
+             
+             
+            }}
+            onError={(e) => {
+              console.log("Erro ao carregar imagem:", e.nativeEvent);
+              setImageError(true);
+            }}
+          />
+                </View>
+                <View style={styles.onlineIndicator} />
+              </View>
+              <Text style={styles.userName}>{user.nomeUsers}</Text>
+              <Text style={styles.userEmail}>{user.emailUsers}</Text>
+            </View>
+
+            {/* Seção de opções */}
+            <View style={styles.optionsSection}>
+              <Pressable 
+                style={({pressed}) => [styles.optionButton, pressed && styles.optionPressed]}
+              >
+                <View style={styles.optionContent}>
+                  <Text style={styles.optionText}> Editar Perfil</Text>
+                  <Text style={styles.optionArrow}>›</Text>
+                </View>
+              </Pressable>
+
+              <Pressable 
+                style={({pressed}) => [styles.optionButton, pressed && styles.optionPressed]}
+              >
+                <View style={styles.optionContent}>
+                  <Text style={styles.optionText}> Notificações</Text>
+                  <Text style={styles.optionArrow}>›</Text>
+                </View>
+              </Pressable>
+
+              <Pressable 
+                style={({pressed}) => [styles.optionButton, pressed && styles.optionPressed]}
+              >
+                <View style={styles.optionContent}>
+                  <Text style={styles.optionText}> Configurações</Text>
+                  <Text style={styles.optionArrow}>›</Text>
+                </View>
+              </Pressable>
+            </View>
+
+            {/* Seção de ações */}
+            <View style={styles.actionsSection}>
+              
+
+              <Pressable 
+                style={({pressed}) => [styles.deleteButton, pressed && styles.deletePressed]}
+              >
+                <Text style={styles.deleteText}>Excluir Perfil</Text>
+              </Pressable>
+            </View>
+
+          </View>
+        </View>
+      </Pressable>
+    </BlurView>
+  </View>
+</Modal>
 
       <StatusBar style="auto" />
     </View>
