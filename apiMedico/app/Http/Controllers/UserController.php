@@ -6,6 +6,7 @@ use App\Models\userModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -94,6 +95,46 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+   public function AtualizarPerfil(Request $request, $id){ 
+    $user = userModel::find($id);
+    
+    if (!$user) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Usuário não encontrado'
+        ], 404);
+    }
+
+    try {
+        // Atualiza os campos que foram enviados na request
+        $camposPermitidos = ['nomeUsers', 'emailUsers', 'senhaUsers', 'tipoSUsers', 'tipoSUsers', 'alturaUsers', 'pesoUsers'];
+        
+        foreach ($camposPermitidos as $campo) {
+            if ($request->has($campo)) {
+                if ($campo === 'senhaUsers') {
+                    
+                    $user->$campo = bcrypt($request->$campo);
+                } else {
+                    $user->$campo = $request->$campo;
+                }
+            }
+        }
+
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Perfil atualizado com sucesso',
+            'user' => $user
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Erro ao atualizar perfil: ' . $e->getMessage()
+        ], 500);
+    }
+}
     public function show(userModel $userModel)
     {
         //

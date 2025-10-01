@@ -23,6 +23,7 @@ Route::get('/users', [UserController::class, 'index']);
 Route::post('/login', [UserController::class, 'login']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::post('/users/{id}/photo', [UserController::class, 'updatePhoto']);
+Route::put('/users/{id}', [UserController::class, 'AtualizarPerfil']);
 
 Route::get('/test', function () {
     return response()->json([

@@ -94,7 +94,20 @@ export default StyleSheet.create({
   blurContainer: {
     flex: 1,
     width: "100%", 
-    height: "100%"
+    height: "100%",
+    alignItems:'center', 
+    justifyContent:'center',
+    display:'flex',
+    flexDirection:'column' 
+
+  },
+   blurContainer2: {
+    flex: 1,
+    width: "100%", 
+    height: "100%",
+    justifyContent:'flex-end'
+   
+
   },
   sidebar: {
     flex: 1,
@@ -216,15 +229,8 @@ export default StyleSheet.create({
   },
 
   // Estilos para o Modal
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(51, 153, 137, 0.4)',
-  },
-  blurContainer: {
-    flex: 1,
-    width: "100%", 
-    height: "100%"
-  },
+ 
+  
   modalBackground: {
     flex: 1,
     width: '100%', 
@@ -392,6 +398,150 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
   },
+  // Modal de Editar Perfil
+editProfileModal: {
+  backgroundColor: '#fffafbff',
+  marginHorizontal: 20,
+  borderRadius: 20,
+  overflow: 'hidden',
+  maxHeight: '100%',
+ 
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 10,
+  },
+  shadowOpacity: 0.3,
+  shadowRadius: 20,
+  elevation: 10,
+},
+
+// Header do Modal
+editProfileHeader: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  paddingHorizontal: 25,
+  paddingVertical: 20,
+  backgroundColor: '#339989ff',
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+},
+editProfileTitle: {
+  fontSize: 22,
+  fontWeight: 'bold',
+  color: '#fffafbff',
+  fontFamily: 'Roboto',
+},
+closeButton: {
+  width: 32,
+  height: 32,
+  borderRadius: 16,
+  backgroundColor: '#7de2d1ff',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+closeButtonText: {
+  fontSize: 20,
+  color: '#339989ff',
+  fontWeight: 'bold',
+  lineHeight: 22,
+},
+
+// Formulário
+editProfileForm: {
+  padding: 25,
+  maxHeight: '70%',
+},
+inputGroup: {
+  marginBottom: 20,
+},
+inputLabel: {
+  fontSize: 16,
+  fontWeight: '600',
+  color: '#339989ff',
+  marginBottom: 8,
+  fontFamily: 'Roboto',
+},
+textInput: {
+  borderWidth: 2,
+  borderColor: '#7de2d1ff',
+  borderRadius: 12,
+  paddingHorizontal: 16,
+  paddingVertical: 12,
+  fontSize: 16,
+  color: '#339989ff',
+  backgroundColor: '#fffafbff',
+  fontFamily: 'Roboto',
+},
+selectContainer: {
+  borderWidth: 2,
+  borderColor: '#7de2d1ff',
+  borderRadius: 12,
+  overflow: 'hidden',
+  backgroundColor: '#fffafbff',
+},
+picker: {
+  height: 50,
+  color: '#339989ff',
+},
+rowInputs: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+},
+halfInput: {
+  width: '48%',
+},
+
+// Botões de Ação
+editProfileActions: {
+  marginTop:height*0.02,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  paddingHorizontal: 25,
+  paddingVertical: 20,
+  borderTopWidth: 1,
+  borderTopColor: '#7de2d133',
+  backgroundColor: '#fffafbff',
+},
+actionButton: {
+  flex: 1,
+  paddingVertical: 15,
+  borderRadius: 12,
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginHorizontal: 5,
+},
+cancelButton: {
+  backgroundColor: 'transparent',
+  borderWidth: 2,
+  borderColor: '#339989ff',
+},
+saveButton: {
+  backgroundColor: '#339989ff',
+  borderWidth: 2,
+  borderColor: '#339989ff',
+},
+cancelButtonText: {
+  color: '#339989ff',
+  fontSize: 16,
+  fontWeight: '600',
+  fontFamily: 'Roboto',
+},
+saveButtonText: {
+  color: '#fffafbff',
+  fontSize: 16,
+  fontWeight: '600',
+  fontFamily: 'Roboto',
+},
+
+// Estados pressionados
+cancelButtonPressed: {
+  backgroundColor: '#33998911',
+},
+saveButtonPressed: {
+  backgroundColor: '#2a7a6d',
+},
 
 
   

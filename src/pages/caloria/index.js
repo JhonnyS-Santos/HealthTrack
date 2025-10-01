@@ -1,21 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { 
-  Text, 
-  View, 
-  TextInput, 
-  Pressable, 
-  KeyboardAvoidingView, 
-  Platform, 
+import { StatusBar } from "expo-status-bar";
+import {
+  Text,
+  View,
+  TextInput,
+  Pressable,
+  KeyboardAvoidingView,
+  Platform,
   FlatList,
   Image,
   ActivityIndicator,
   Modal,
   ScrollView,
-  Keyboard
-} from 'react-native';
-import { useState, useEffect } from 'react';
-import styles from './styles';
-import axios from 'axios'; 
+  Keyboard,
+} from "react-native";
+import { useState, useEffect } from "react";
+import styles from "./styles";
+import axios from "axios";
 
 export default function Caloria() {
   const [query, setQuery] = useState("");
@@ -27,21 +27,35 @@ export default function Caloria() {
   const [detailsLoading, setDetailsLoading] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
-  const popularTerms = ["apple", "banana", "bread", "chicken", "pizza", "pasta", "rice", 
-                       "milk", "cheese", "yogurt", "egg", "fish", "beef", "potato"];
+  const popularTerms = [
+    "apple",
+    "banana",
+    "bread",
+    "chicken",
+    "pizza",
+    "pasta",
+    "rice",
+    "milk",
+    "cheese",
+    "yogurt",
+    "egg",
+    "fish",
+    "beef",
+    "potato",
+  ];
 
-  const APP_ID = '10df2edd';
-  const APP_KEY = '0fcf26f90b3722cb7f07e2e043b4790c';
+  const APP_ID = "10df2edd";
+  const APP_KEY = "0fcf26f90b3722cb7f07e2e043b4790c";
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
+      "keyboardDidShow",
       () => {
         setKeyboardVisible(true);
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
+      "keyboardDidHide",
       () => {
         setKeyboardVisible(false);
       }
@@ -59,20 +73,24 @@ export default function Caloria() {
 
   const fetchInitialProducts = async () => {
     setLoading(true);
-    const randomTerm = popularTerms[Math.floor(Math.random() * popularTerms.length)];
+    const randomTerm =
+      popularTerms[Math.floor(Math.random() * popularTerms.length)];
     try {
-      const response = await axios.get('https://trackapi.nutritionix.com/v2/search/instant', {
-        params: {
-          query: randomTerm, 
-          branded: true,
-          common: true
-        },
-        headers: {
-          'x-app-id': APP_ID,
-          'x-app-key': APP_KEY,
-          'x-remote-user-id': '0' 
+      const response = await axios.get(
+        "https://trackapi.nutritionix.com/v2/search/instant",
+        {
+          params: {
+            query: randomTerm,
+            branded: true,
+            common: true,
+          },
+          headers: {
+            "x-app-id": APP_ID,
+            "x-app-key": APP_KEY,
+            "x-remote-user-id": "0",
+          },
         }
-      });
+      );
 
       // CORREÇÃO: Combinar resultados branded e common
       let allProducts = [];
@@ -83,7 +101,6 @@ export default function Caloria() {
         allProducts = [...allProducts, ...response.data.common];
       }
       setProducts(allProducts);
-      
     } catch (error) {
       console.error("Erro ao carregar produtos iniciais:", error);
       setError("Não foi possível carregar os produtos.");
@@ -94,7 +111,7 @@ export default function Caloria() {
 
   const handleSearch = async () => {
     Keyboard.dismiss();
-    
+
     if (!query.trim()) {
       fetchInitialProducts();
       return;
@@ -102,20 +119,23 @@ export default function Caloria() {
 
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await axios.get('https://trackapi.nutritionix.com/v2/search/instant', {
-        params: {
-          query: query,
-          branded: true,
-          common: true
-        },
-        headers: {
-          'x-app-id': APP_ID,
-          'x-app-key': APP_KEY,
-          'x-remote-user-id': '0' 
+      const response = await axios.get(
+        "https://trackapi.nutritionix.com/v2/search/instant",
+        {
+          params: {
+            query: query,
+            branded: true,
+            common: true,
+          },
+          headers: {
+            "x-app-id": APP_ID,
+            "x-app-key": APP_KEY,
+            "x-remote-user-id": "0",
+          },
         }
-      });
+      );
 
       // CORREÇÃO: Combinar resultados branded e common
       let allProducts = [];
@@ -125,14 +145,13 @@ export default function Caloria() {
       if (response.data.common && response.data.common.length > 0) {
         allProducts = [...allProducts, ...response.data.common];
       }
-      
+
       if (allProducts.length > 0) {
         setProducts(allProducts);
       } else {
         setProducts([]);
         setError("Nenhum produto encontrado. Tente outro termo de busca.");
       }
-      
     } catch (error) {
       console.error("Erro na pesquisa:", error);
       setError("Erro ao buscar produtos. Verifique sua conexão.");
@@ -144,20 +163,23 @@ export default function Caloria() {
   const fetchProductDetails = async (item) => {
     setDetailsLoading(true);
     setModalVisible(true);
-    
+
     try {
       if (item.nix_item_id) {
-        const response = await axios.get('https://trackapi.nutritionix.com/v2/search/item', {
-          params: {
-            nix_item_id: item.nix_item_id,
-          },
-          headers: {
-            'x-app-id': APP_ID,
-            'x-app-key': APP_KEY,
-            'x-remote-user-id': '0' 
+        const response = await axios.get(
+          "https://trackapi.nutritionix.com/v2/search/item",
+          {
+            params: {
+              nix_item_id: item.nix_item_id,
+            },
+            headers: {
+              "x-app-id": APP_ID,
+              "x-app-key": APP_KEY,
+              "x-remote-user-id": "0",
+            },
           }
-        });
-        
+        );
+
         if (response.data.foods && response.data.foods.length > 0) {
           setProductDetails(response.data.foods[0]);
         } else {
@@ -178,8 +200,8 @@ export default function Caloria() {
     <Pressable onPress={() => fetchProductDetails(item)}>
       <View style={styles.productItem}>
         {item.photo && item.photo.thumb ? (
-          <Image 
-            source={{ uri: item.photo.thumb }} 
+          <Image
+            source={{ uri: item.photo.thumb }}
             style={styles.productImage}
             resizeMode="cover"
           />
@@ -189,21 +211,19 @@ export default function Caloria() {
             <Text style={styles.placeholderText}>Imagem</Text>
           </View>
         )}
-        
+
         <View style={styles.productInfo}>
           <Text style={styles.productName} numberOfLines={2}>
-            {item.food_name || 'Nome não disponível'}
+            {item.food_name || "Nome não disponível"}
           </Text>
           <Text style={styles.brandName} numberOfLines={1}>
-            {item.brand_name || 'Marca não especificada'}
+            {item.brand_name || "Marca não especificada"}
           </Text>
-          
+
           {item.nf_calories && (
-            <Text style={styles.calories}>
-              {item.nf_calories} calorias
-            </Text>
+            <Text style={styles.calories}>{item.nf_calories} calorias</Text>
           )}
-          
+
           {item.serving_qty && item.serving_unit && (
             <Text style={styles.serving}>
               Porção: {item.serving_qty} {item.serving_unit}
@@ -220,7 +240,7 @@ export default function Caloria() {
     <View style={styles.container}>
       <StatusBar style="light" />
 
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.searchContainer}
       >
@@ -228,15 +248,15 @@ export default function Caloria() {
           <TextInput
             style={styles.input}
             placeholder="Digite para pesquisar..."
-            placeholderTextColor="rgba(255, 250, 251, 0.7)" 
+            placeholderTextColor="rgba(255, 250, 251, 0.7)"
             value={query}
             onChangeText={setQuery}
             onSubmitEditing={handleSearch}
           />
-          <Pressable 
+          <Pressable
             style={({ pressed }) => [
               styles.botao,
-              pressed && styles.botaoPressionado
+              pressed && styles.botaoPressionado,
             ]}
             onPress={handleSearch}
           >
@@ -270,7 +290,7 @@ export default function Caloria() {
           }
           contentContainerStyle={[
             products.length === 0 && styles.emptyListContainer,
-            keyboardVisible && { paddingBottom: 300 }
+            keyboardVisible && { paddingBottom: 300 },
           ]}
           keyboardShouldPersistTaps="handled"
         />
@@ -287,15 +307,17 @@ export default function Caloria() {
             {detailsLoading ? (
               <View style={styles.modalLoading}>
                 <ActivityIndicator size="large" color="#7de2d1" />
-                <Text style={styles.modalLoadingText}>Carregando informações...</Text>
+                <Text style={styles.modalLoadingText}>
+                  Carregando informações...
+                </Text>
               </View>
             ) : productDetails ? (
               <ScrollView>
                 <View style={styles.modalHeader}>
                   <Text style={styles.modalTitle}>
-                    {productDetails.food_name || 'Produto'}
+                    {productDetails.food_name || "Produto"}
                   </Text>
-                  <Pressable 
+                  <Pressable
                     style={styles.closeButton}
                     onPress={() => setModalVisible(false)}
                   >
@@ -304,8 +326,8 @@ export default function Caloria() {
                 </View>
 
                 {productDetails.photo && productDetails.photo.thumb && (
-                  <Image 
-                    source={{ uri: productDetails.photo.thumb }} 
+                  <Image
+                    source={{ uri: productDetails.photo.thumb }}
                     style={styles.modalImage}
                     resizeMode="cover"
                   />
@@ -316,19 +338,23 @@ export default function Caloria() {
                   <View style={styles.detailRow}>
                     <Text style={styles.detailLabel}>Marca:</Text>
                     <Text style={styles.detailValue}>
-                      {productDetails.brand_name || 'Não especificada'}
+                      {productDetails.brand_name || "Não especificada"}
                     </Text>
                   </View>
-                  
-                  {productDetails.serving_qty && productDetails.serving_unit && (
-                    <View style={styles.detailRow}>
-                      <Text style={styles.detailLabel}>Tamanho da porção:</Text>
-                      <Text style={styles.detailValue}>
-                        {productDetails.serving_qty} {productDetails.serving_unit}
-                      </Text>
-                    </View>
-                  )}
-                  
+
+                  {productDetails.serving_qty &&
+                    productDetails.serving_unit && (
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>
+                          Tamanho da porção:
+                        </Text>
+                        <Text style={styles.detailValue}>
+                          {productDetails.serving_qty}{" "}
+                          {productDetails.serving_unit}
+                        </Text>
+                      </View>
+                    )}
+
                   {productDetails.nf_calories && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Calorias:</Text>
@@ -340,8 +366,10 @@ export default function Caloria() {
                 </View>
 
                 <View style={styles.detailsSection}>
-                  <Text style={styles.sectionTitle}>Informações Nutricionais</Text>
-                  
+                  <Text style={styles.sectionTitle}>
+                    Informações Nutricionais
+                  </Text>
+
                   {productDetails.nf_total_fat !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Gorduras Totais:</Text>
@@ -350,16 +378,18 @@ export default function Caloria() {
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_saturated_fat !== undefined && (
                     <View style={styles.detailRow}>
-                      <Text style={styles.detailLabel}>Gorduras Saturadas:</Text>
+                      <Text style={styles.detailLabel}>
+                        Gorduras Saturadas:
+                      </Text>
                       <Text style={styles.detailValue}>
                         {productDetails.nf_saturated_fat}g
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_cholesterol !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Colesterol:</Text>
@@ -368,7 +398,7 @@ export default function Caloria() {
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_sodium !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Sódio:</Text>
@@ -377,16 +407,18 @@ export default function Caloria() {
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_total_carbohydrate !== undefined && (
                     <View style={styles.detailRow}>
-                      <Text style={styles.detailLabel}>Carboidratos Totais:</Text>
+                      <Text style={styles.detailLabel}>
+                        Carboidratos Totais:
+                      </Text>
                       <Text style={styles.detailValue}>
                         {productDetails.nf_total_carbohydrate}g
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_dietary_fiber !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Fibra Alimentar:</Text>
@@ -395,7 +427,7 @@ export default function Caloria() {
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_sugars !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Açúcares:</Text>
@@ -404,7 +436,7 @@ export default function Caloria() {
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_protein !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Proteínas:</Text>
@@ -413,7 +445,7 @@ export default function Caloria() {
                       </Text>
                     </View>
                   )}
-                  
+
                   {productDetails.nf_potassium !== undefined && (
                     <View style={styles.detailRow}>
                       <Text style={styles.detailLabel}>Potássio:</Text>
@@ -423,28 +455,32 @@ export default function Caloria() {
                     </View>
                   )}
 
-                  {!productDetails.nf_total_fat && 
-                   !productDetails.nf_saturated_fat && 
-                   !productDetails.nf_cholesterol && 
-                   !productDetails.nf_sodium && 
-                   !productDetails.nf_total_carbohydrate && 
-                   !productDetails.nf_dietary_fiber && 
-                   !productDetails.nf_sugars && 
-                   !productDetails.nf_protein && 
-                   !productDetails.nf_potassium && (
-                    <View style={styles.detailRow}>
-                      <Text style={styles.detailLabel}>Informações nutricionais:</Text>
-                      <Text style={styles.detailValue}>
-                        Detalhes não disponíveis
-                      </Text>
-                    </View>
-                  )}
+                  {!productDetails.nf_total_fat &&
+                    !productDetails.nf_saturated_fat &&
+                    !productDetails.nf_cholesterol &&
+                    !productDetails.nf_sodium &&
+                    !productDetails.nf_total_carbohydrate &&
+                    !productDetails.nf_dietary_fiber &&
+                    !productDetails.nf_sugars &&
+                    !productDetails.nf_protein &&
+                    !productDetails.nf_potassium && (
+                      <View style={styles.detailRow}>
+                        <Text style={styles.detailLabel}>
+                          Informações nutricionais:
+                        </Text>
+                        <Text style={styles.detailValue}>
+                          Detalhes não disponíveis
+                        </Text>
+                      </View>
+                    )}
                 </View>
               </ScrollView>
             ) : (
               <View style={styles.modalLoading}>
-                <Text style={styles.errorText}>Erro ao carregar informações do produto.</Text>
-                <Pressable 
+                <Text style={styles.errorText}>
+                  Erro ao carregar informações do produto.
+                </Text>
+                <Pressable
                   style={styles.retryButton}
                   onPress={() => setModalVisible(false)}
                 >
