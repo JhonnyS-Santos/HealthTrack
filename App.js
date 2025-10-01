@@ -26,7 +26,7 @@ export default function App() {
         />
           <Stack.Screen
           options={{ headerShown: false }}
-          name="caloria"
+          name="Caloria"
           component={Caloria}
         />
         

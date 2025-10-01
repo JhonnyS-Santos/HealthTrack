@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#339989',
     alignItems: 'center',
+    paddingTop: "15%",
   },
   searchContainer: {
     backgroundColor: '#339989',
@@ -20,10 +21,10 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: 'rgba(51, 49, 49, 0.2)',
     borderRadius: 10,
-    paddingHorizontal: 15,
     color: '#fffafb',
     marginRight: 10,
-    fontSize: 16,
+    paddingLeft: "3%",
+    fontSize: 15,
   },
   botao: {
     backgroundColor: '#7de2d1',

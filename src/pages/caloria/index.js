@@ -16,6 +16,7 @@ import {
 import { useState, useEffect } from "react";
 import styles from "./styles";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Caloria() {
   const [query, setQuery] = useState("");
@@ -235,6 +236,7 @@ export default function Caloria() {
   );
 
   const ItemSeparator = () => <View style={styles.separator} />;
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -245,9 +247,19 @@ export default function Caloria() {
         style={styles.searchContainer}
       >
         <View style={styles.searchBox}>
+        <Pressable
+            style={({ pressed }) => [
+              styles.botao,
+              {backgroundColor: "#D10000", marginRight: "2%",},
+              pressed && styles.botaoPressionado, 
+            ]}
+            onPress={() => navigation.navigate('Home')}
+          >
+            <Text style={[styles.textoBotao, {color: "#fff",}]}>Voltar</Text>
+          </Pressable>
           <TextInput
             style={styles.input}
-            placeholder="Digite para pesquisar..."
+            placeholder="Digite para pesquisar"
             placeholderTextColor="rgba(255, 250, 251, 0.7)"
             value={query}
             onChangeText={setQuery}

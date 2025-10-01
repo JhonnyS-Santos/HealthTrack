@@ -213,18 +213,18 @@ export default function Home() {
   };
 
   const numeros = [
-    { id: 1, img: require("./img/Primeiro.png") },
-    { id: 2, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 3, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 4, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 5, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 6, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 7, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 8, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 9, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 10, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 11, img: require("../../../assets/Icones/Pasta.png") },
-    { id: 12, img: require("../../../assets/Icones/Pasta.png") },
+    { id: 1, img: require("./img/Primeiro.png"), nav: () => navigation.navigate('Caloria')  },
+    { id: 2, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 3, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 4, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 5, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 6, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 7, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 8, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 9, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 10, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 11, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 12, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
   ];
 
   const navigation = useNavigation();
@@ -335,7 +335,7 @@ export default function Home() {
               <Pressable
                 style={[styles.adv]}
                 onPress={() => {
-                  item.id;
+                  item.nav();
                 }}
               >
                 {item.img && (
