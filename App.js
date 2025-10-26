@@ -12,6 +12,7 @@ import Login from "./src/pages/login";
 import Splash from "./src/pages/splash";
 import Home from "./src/pages/home";
 import Caloria from "./src/pages/caloria";
+import Mapa from "./src/pages/mapa";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,12 +25,18 @@ export default function App() {
           name="Home"
           component={Home}
         />
-          <Stack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Caloria"
           component={Caloria}
         />
-        
+
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Mapa"
+          component={Mapa}
+        />
+
         <Stack.Screen
           options={{ headerShown: false }}
           name="Login"

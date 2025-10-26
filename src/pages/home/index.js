@@ -214,7 +214,7 @@ export default function Home() {
 
   const numeros = [
     { id: 1, img: require("./img/Primeiro.png"), nav: () => navigation.navigate('Caloria')  },
-    { id: 2, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
+    { id: 2, img: require("./img/Segundo.png"), nav: () => navigation.navigate('Mapa') },
     { id: 3, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
     { id: 4, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
     { id: 5, img: require("../../../assets/Icones/Pasta.png"), nav: () => navigation.navigate('Home') },
